@@ -13,7 +13,15 @@
 # methods is not available in rdoc.
 
 require 'java'
-require 'jblas.jar'
+begin
+  require 'jblas-0.2.jar'
+rescue LoadError => e
+  begin
+    org.jblas.DoubleMatrix
+  rescue NameError => e
+    raise LoadError, 'Cannot load jblas.jar, and it also does not seem to be in the CLASSPATH'
+  end
+end
 
 # The jblas module provides matrix classes and functions to
 # comfortably work with the matrices.
@@ -181,22 +189,17 @@ module JBLAS
 
   unless JBLAS < Java
     include Java
+        
+    import org.jblas.DoubleMatrix
+    import org.jblas.FloatMatrix
+    import org.jblas.SimpleBlas
+    import org.jblas.DoubleFunction
+    import org.jblas.FloatFunction
     
-    def self.edu #:nodoc:
-      # make 'edu' available just as 'com', or 'org'
-      ::Java::Edu
-    end
-    
-    import org.jblas.la.DoubleMatrix
-    import org.jblas.la.FloatMatrix
-    import org.jblas.la.SimpleBlas
-    import org.jblas.la.DoubleFunction
-    import org.jblas.la.FloatFunction
-    
-    import org.jblas.la.Solve
-    import org.jblas.la.Eigen
-    import org.jblas.la.Geometry
-    import org.jblas.la.MatrixFunctions
+    import org.jblas.Solve
+    import org.jblas.Eigen
+    import org.jblas.Geometry
+    import org.jblas.MatrixFunctions
   end
 
   ######################################################################

@@ -92,7 +92,7 @@ class TestJBLAS < Test::Unit::TestCase
   def test_map
     z = @x.map {|v| 2*v}
     assert_equal 2*@x, z
-    assert_equal Java::OrgJblasLa::DoubleMatrix, z.class
+    assert_equal Java::OrgJblas::DoubleMatrix, z.class
   end
   
   def test_symmetric
