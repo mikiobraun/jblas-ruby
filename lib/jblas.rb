@@ -840,7 +840,7 @@ module JBLAS
     when 2
       x.norm2
     when :inf
-      x.maxnorm
+      x.normmax
     end
   end
 
