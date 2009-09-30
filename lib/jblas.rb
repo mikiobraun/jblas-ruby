@@ -14,12 +14,12 @@
 
 require 'java'
 begin
-  require 'jblas-0.2.jar'
+  require 'jblas-0.3.jar'
 rescue LoadError => e
   begin
     org.jblas.DoubleMatrix
   rescue NameError => e
-    raise LoadError, 'Cannot load jblas.jar, and it also does not seem to be in the CLASSPATH'
+    raise LoadError, 'Cannot load jblas.jar, and it also does not seem to be in the class path!'
   end
 end
 
@@ -190,16 +190,16 @@ module JBLAS
   unless JBLAS < Java
     include Java
         
-    import org.jblas.DoubleMatrix
-    import org.jblas.FloatMatrix
-    import org.jblas.SimpleBlas
-    import org.jblas.DoubleFunction
-    import org.jblas.FloatFunction
+    java_import org.jblas.DoubleMatrix
+    java_import org.jblas.FloatMatrix
+    java_import org.jblas.SimpleBlas
+    java_import org.jblas.DoubleFunction
+    java_import org.jblas.FloatFunction
     
-    import org.jblas.Solve
-    import org.jblas.Eigen
-    import org.jblas.Geometry
-    import org.jblas.MatrixFunctions
+    java_import org.jblas.Solve
+    java_import org.jblas.Eigen
+    java_import org.jblas.Geometry
+    java_import org.jblas.MatrixFunctions
   end
 
   ######################################################################
@@ -776,10 +776,12 @@ module JBLAS
         end
         s = MatrixFunctions.#{fn}(x)
       end
+      module_function :#{fn}
 
       def #{fn}i(x)
         MatrixFunctions.#{fn}i(x)
       end
+      module_function :#{fn}i
     EOS
   end
 
