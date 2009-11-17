@@ -584,6 +584,16 @@ module JBLAS
       end
       o.close
     end
+
+    #def marshal_dump
+    #  [rows, columns, data.to_a]
+    #end
+
+    #def mashal_load(d)
+    #  puts "ouch"
+    #  resize(d[0], d[1])
+    #  d[2].each_with_index {|x,i| put(i, x)}
+    #end
   end # module MatrixMixin
   
   class MatrixElementWiseProxy
