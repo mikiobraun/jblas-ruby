@@ -169,4 +169,9 @@ end
     assert_equal 6, mat[1,2,3].sum
     assert_equal mat[[6],[15]], mat[[1,2,3],[4,5,6]].row_sums
   end
+
+  def test_inv
+    x = DoubleMatrix.eye(10)
+    assert_equal x.inv, x
+  end
 end

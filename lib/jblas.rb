@@ -511,7 +511,7 @@ module JBLAS
         raise ArgumentError, 'Inverses can only be computed from square ' +
           'matrices. Use solve instead!'
       end
-      self.solve(self.class.eye(size[0]))
+      self.solve(self.class.eye(rows))
     end
 
     # Solve the linear equation self * x = b.
