@@ -174,5 +174,8 @@ end
     x = mat[[1, 2, 0], [1, 2, 1], [0, 1, 2]]
     xi = x.inv
     assert_equal eye(3), x * xi
+
+    x = DoubleMatrix.eye(10)
+    assert_equal x.inv, x
   end
 end
