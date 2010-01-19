@@ -7,7 +7,7 @@ spec = Gem::Specification.new do |s|
   s.author = "Mikio L. Braun"
   s.email = "mikiobraun@gmail.com"
   s.homepage = "http://mikiobraun.github.com/jblas-ruby"
-  s.version = "0.2"
+  s.version = "1.0"
   s.summary = "jblas-ruby - Java based linear algebra for Ruby"
   s.platform = Gem::Platform::RUBY
   s.requirements << 'none'

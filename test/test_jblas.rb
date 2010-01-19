@@ -53,7 +53,7 @@ class TestJBLAS < Test::Unit::TestCase
     assert_equal [[1,0,0],[1,0,0],[0,0,0]], @x < 3
     assert_equal [[0,0,0],[1,0,0],[1,0,0]], ((@x <= 3) & (@x > 1))
     assert_equal [[1,1,1],[0,1,1],[0,1,1]], ((@x <= 3) & (@x > 1)).not
-    assert_equal Array, @x.select {|z| z <= 5}.class
+    #assert_equal Array, @x.select {|z| z <= 5}.class
   end
   
   def test_rows_and_columns
@@ -168,5 +168,11 @@ end
   def test_sum
     assert_equal 6, mat[1,2,3].sum
     assert_equal mat[[6],[15]], mat[[1,2,3],[4,5,6]].row_sums
+  end
+
+  def test_inv
+    x = mat[[1, 2, 0], [1, 2, 1], [0, 1, 2]]
+    xi = x.inv
+    assert_equal eye(3), x * xi
   end
 end

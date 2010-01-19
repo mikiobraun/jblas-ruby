@@ -14,7 +14,7 @@
 
 require 'java'
 begin
-  require 'jblas-0.3.jar'
+  require 'jblas.jar'
 rescue LoadError => e
   begin
     org.jblas.DoubleMatrix
