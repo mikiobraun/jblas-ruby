@@ -1,7 +1,12 @@
-jblas-ruby 0.1
-(c) 2009 by Mikio L. Braun
+jblas-ruby 1.0 (possible one day)
+(c) 2009, 2010 by Mikio L. Braun
 
 jblas-ruby is a wrapper for JRuby of jblas (http://jblas.org), a linear algebra
 library for Java.
 
-You need to get jblas.jar for your platform to use jblas-ruby.
+You need to get jblas.jar for your platform to use jblas-ruby. See http://jblas.org
+
+jblas-ruby is currently in pretty ALPHA stage, although I already use
+it for my stuff, meaning that documentation is almost non-existent,
+method names are likely to change, and it might not work out of the
+box ;)
