@@ -30,5 +30,5 @@ end
 
 desc 'generate rdoc html'
 task 'rdoc-html' do
-  sh 'rdoc -S -f html -x "test_*"'
+  sh 'rdoc -S -M -f html lib'
 end

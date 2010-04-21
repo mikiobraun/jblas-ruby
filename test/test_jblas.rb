@@ -115,6 +115,8 @@ class TestJBLAS < Test::Unit::TestCase
   def test_functions
     #puts "sin(x) = #{sin(x)}"
     #with binding, 'cos(0)'
+    assert_equal [2 ** 3, 4 ** 3], pow!(mat[2, 4], 3)
+    assert_equal [Math.sin(1), Math.sin(3)], sin!(mat[1,3])
 end
 
   def test_slices
