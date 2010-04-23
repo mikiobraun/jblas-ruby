@@ -30,6 +30,18 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+class Numeric
+  def to_jblas_index
+    self
+  end
+end
+
+module Enumerable
+  def to_jblas_index
+    to_a.to_java :int
+  end
+end
+
 module JBLAS
   # Mixin for all kinds of element access.
   #
@@ -38,55 +50,18 @@ module JBLAS
     # Get the entry at _i_, _j_
     def [](i, j=nil)
       if j
-        rget(i, j)
+        get(i.to_jblas_index, j.to_jblas_index)
       else
-        rget(i)
+        get(i.to_jblas_index)
       end
     end
 
     # Set the entry at _i_, _j_ to _v_.
     def []=(i, j, v=nil)
       if v
-        rput(i, j, v)
+        put(i.to_jblas_index, j.to_jblas_index, v)
       else
-        rput(i, j)
-      end
-    end
-
-    private
-
-    def non_java_enum?(o)
-      not o.kind_of? JavaProxy and o.kind_of? Enumerable
-    end
-
-
-    def to_java_if_non_java_enum(o)
-      if non_java_enum? o
-        o.to_a.to_java(:int)
-      else
-        o
-      end
-    end
-
-    public
-
-    def rget(i, j=nil)
-      i = to_java_if_non_java_enum i
-      if j
-        j = to_java_if_non_java_enum j
-        get(i, j)
-      else
-        get(i)
-      end
-    end
-
-    def rput(i, j, v=nil)
-      i = to_java_if_non_java_enum i
-      if v
-        j = to_java_if_non_java_enum j
-        put(i, j, v)
-      else
-        put(i, j)
+        put(i.to_jblas_index, j)
       end
     end
 

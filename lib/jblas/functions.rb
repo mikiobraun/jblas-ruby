@@ -93,12 +93,10 @@ module JBLAS
   # Return the diagonal of a matrix or return a matrix whose diagonal
   # is specified by the vector
   def diag(x)
-    if Array === x
-      mat.diag(x.to_mat)
-    elsif not x.vector?
-      x.diag
-    else
+    if x.vector?
       mat.diag(x)
+    else
+      x.diag
     end
   end
 
@@ -295,5 +293,24 @@ module JBLAS
   # Compute the cumulative sum of a vector.
   def cumsum(x)
     x.cumulative_sum
+  end
+
+  # Compute the LU factorization with pivoting.
+  #
+  # Returns matrices l, u, p
+  def lup(x)
+    result = Decompose.lu(x)
+    return result.l, result.u, result.p
+  end
+
+  def det(x)
+    l, u, p = lup(x)
+    return u.diag.prod
+  end
+
+  def tictoc
+    saved_time = Time.now
+    yield
+    return Time.now - saved_time
   end
 end

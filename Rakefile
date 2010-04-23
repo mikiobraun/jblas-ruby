@@ -24,7 +24,7 @@ end
 desc 'run all tests in the test directory'
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = Dir.glob('test/*.rb')
+  t.test_files = Dir.glob('test/**/test_*.rb')
   t.verbose = true
 end
 

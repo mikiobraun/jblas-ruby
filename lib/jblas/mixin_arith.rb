@@ -36,28 +36,28 @@ module JBLAS
   # Collected in MatrixMixin.
   module MatrixArithMixin
     # Add _o_ to this matrix. Works with matrices and scalars.
-    def +(o); add(o.to_mat); end
+    def +(o); add(o); end
     # Subtract _o_ from this matrix. Works with matrices and scalars.
     def -(o); sub(o); end
     # Multiply this matrix with _o_. If _o_ is a matrix, this
     # matrix-matrix multiplication. If you want elementwise
     # multiplication, you must use +emul+
-    def *(o); mmul(o.to_mat); end
+    def *(o); mmul(o); end
     # Divide this matrix by _o_.
-    def /(o); div(o.to_mat); end
+    def /(o); div(o); end
     # Negating a matrix
     def -@; neg; end
 
     # Elementwise test on less-than with _o_.
-    def <(o); lt(o.to_mat); end
+    def <(o); lt(o); end
     # Elementwise test on less-than-or-equal with _o_.
-    def <=(o); le(o.to_mat); end
+    def <=(o); le(o); end
     # Elementwise test on greater-than with _o_.
-    def >(o); gt(o.to_mat); end
+    def >(o); gt(o); end
     # Elementwise test on greater-than-or-equal with _o_.
-    def >=(o); ge(o.to_mat); end
+    def >=(o); ge(o); end
     # Elementwise test on equality with _o_.
-    def ===(o); eq(o.to_mat); end
+    def ===(o); eq(o); end
 
     def add!(s); addi(s); end
     def sub!(s); subi(s); end
@@ -82,22 +82,28 @@ module JBLAS
     # Test on equality.
     def ==(o)
       #puts "== called with self = #{self.inspect}, o = #{o.inspect}"
-      equals(o.to_mat)
+      equals(o)
     end
 
     # Elementwise and with _o_
-    def &(o); self.and(o.to_mat); end
+    def &(o); self.and(o); end
     # Elementwise or with _o_
-    def |(o); self.or(o.to_mat); end
+    def |(o); self.or(o); end
     # Elementwise xor with _o_
-    def ^(o); self.xor(o.to_mat); end
+    def ^(o); self.xor(o); end
 
     def **(o); MatrixFunctions.pow(self, o); end
 
-    def coerce(o) #:nodoc:
-      unless self.class === o
-        [ReversedArithmetic.new(self), o]
+    def coerce(o) # :nodoc:
+      case o
+      when Numeric
+        return ReversedArithmetic.new(self), o
+      else
+        return self, o
       end
+      #unless self.class === o
+      #  [ReversedArithmetic.new(self), o]
+      #end
     end
   end
 end

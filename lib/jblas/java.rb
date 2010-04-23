@@ -66,6 +66,8 @@ module JBLAS
     java_import org.jblas.Solve
     java_import org.jblas.Eigen
     java_import org.jblas.Geometry
+    java_import org.jblas.Geometry
+    java_import org.jblas.Decompose
     java_import org.jblas.MatrixFunctions
   end
 end
