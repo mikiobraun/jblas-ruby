@@ -1,3 +1,5 @@
+# Mixin for class methods of the matrix classes. Defines JBLAS::MatrixClassMixin.
+
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
 #

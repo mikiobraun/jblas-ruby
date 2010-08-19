@@ -1,3 +1,6 @@
+# Mixins for complex numbers. Defines JBLAS::ComplexMixin. See also
+# ComplexDouble and ComplexFloat.
+
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
 #
@@ -31,22 +34,41 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module JBLAS
+  # Syntactic sugar for complex numbers.
+  #
+  # Defines the arithmetic operators *, +, -, /, and coercion such that
+  # the complex numbers interact well with the builtin numerics.
   module ComplexMixin
+    # Convert to a string.
     def to_s
       "#{real} + #{imag}i"
     end
 
+    # Same as to_s.
     def inspect
       to_s
     end
 
+    # Multiply complex values.
     def *(o); mul(o); end
+    # Add complex values.
     def +(o); add(o); end
+    # Subtract complex values.
     def -(o); sub(o); end
+    # Divide complex values.
     def /(o); div(o); end
+    # Negative complex values.
     def -@; neg; end
 
+    # Subtract with swapped operands.
+    #
+    # This means that a.rsub(b) = b - a. This method is necessary to
+    # make coercion work.
     def rsub(o); -self + o; end
+    # Divide with swapped operands.
+    #
+    # This means that a.rdiv(b) = b / a. This method is necessary to
+    # make coercion work.
     def rdiv(o); inv * o; end
     
     def coerce(o) #:nodoc:

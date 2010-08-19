@@ -7,14 +7,14 @@ spec = Gem::Specification.new do |s|
   s.author = "Mikio L. Braun"
   s.email = "mikiobraun@gmail.com"
   s.homepage = "http://mikiobraun.github.com/jblas-ruby"
-  s.version = "1.0"
+  s.version = "1.1"
   s.summary = "jblas-ruby - Java based linear algebra for Ruby"
   s.platform = Gem::Platform::RUBY
   s.requirements << 'none'
   s.require_path = 'lib'
-  s.files = Dir.glob 'lib/**'
+  s.files = Dir.glob 'lib/**/*.{rb,jar}'
   s.has_rdoc = true
-  s.description = "Syntactic sugar for DoubleMatrix classes"
+  s.description = "Fast linear algebra for JRuby based on the jblas library."
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
@@ -30,5 +30,7 @@ end
 
 desc 'generate rdoc html'
 task 'rdoc-html' do
-  sh 'rdoc -S -M -f html lib'
+  sh 'rm -rf doc'
+  files = Dir.glob('lib/jblas/*.rb').sort + Dir.glob('lib/*.rb')
+  sh "rdoc -S -f html #{files.join(' ')}"
 end

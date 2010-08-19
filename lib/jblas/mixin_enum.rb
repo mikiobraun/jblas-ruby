@@ -1,3 +1,5 @@
+# Mixin for making matrices behave like enumerables. Defines JBLAS::MatrixEnumMixin.
+
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
 #

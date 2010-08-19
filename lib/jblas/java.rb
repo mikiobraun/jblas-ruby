@@ -34,12 +34,12 @@
 
 require 'java'
 begin
-  require 'jblas.jar'
+  require 'jblas/jblas-1.1.jar'
 rescue LoadError => e
   begin
     org.jblas.DoubleMatrix
   rescue NameError => e
-    raise LoadError, 'Cannot load jblas.jar, and it also does not seem to be in the class path!'
+    raise LoadError, 'Cannot load jblas-1.1.jar, and it also does not seem to be in the class path!'
   end
 end
 
@@ -50,6 +50,8 @@ module JBLAS
   #
   ######################################################################
 
+  # In connection with rish (http://mikiobraun.github.com/rish/), we
+  # need this guard for possible reloading of this file.
   unless JBLAS < Java
     include Java
 
@@ -66,8 +68,8 @@ module JBLAS
     java_import org.jblas.Solve
     java_import org.jblas.Eigen
     java_import org.jblas.Geometry
-    java_import org.jblas.Geometry
     java_import org.jblas.Decompose
     java_import org.jblas.MatrixFunctions
+    java_import org.jblas.Singular
   end
 end

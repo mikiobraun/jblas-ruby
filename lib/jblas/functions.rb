@@ -1,4 +1,4 @@
-# Functions within JBLAS, for example, sin, cos, and so on.
+# Functions within JBLAS, for example, sin, cos, and so on. See JBLAS.
 
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
@@ -31,6 +31,8 @@
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+require 'jblas/errors'
 
 module JBLAS
   module_function
@@ -127,9 +129,28 @@ module JBLAS
     end
   end
 
-  FUNCTIONS = %w(abs acos asin atan cbrt ceil cos cosh exp floor log log10 signum sin sinh sqrt tan tanh)
+  FUNCTIONS = {
+    'abs' => 'Compute the absolute value.',
+    'acos' => 'Compute the arcus cosine.',
+    'asin' => 'Compute the arcus sine.',
+    'atan' => 'Compute the arcus tangens.',
+    'cbrt' => 'Compute the cube root.',
+    'ceil' => 'Round up to the next integer',
+    'cos'  => 'Compute the cosine.',
+    'cosh' => 'Compute the hyperbolic cosine.',
+    'exp' => 'Compute the exponential function.',
+    'floor' => 'Round down to the next integer',
+    'log' => 'Compute the natural logarithm',
+    'log10' => 'Compute the base-10 logarithm',
+    'signum' => 'Compute the sign',
+    'sin' => 'Compute the sine',
+    'sinh' => 'Compute the hyperbolic sine',
+    'sqrt' => 'Compute the square root',
+    'tan' => 'Compute the tangens',
+    'tanh' => 'Compute the hyperbolic tangens'
+  }
 
-  FUNCTIONS.each do |fn|
+  FUNCTIONS.each_key do |fn|
     module_eval <<-EOS
       def #{fn}(x)
         if Array === x
@@ -299,13 +320,54 @@ module JBLAS
   #
   # Returns matrices l, u, p
   def lup(x)
+    check_matrix_square(x)
     result = Decompose.lu(x)
     return result.l, result.u, result.p
   end
 
+  # Compute the Cholesky decomposition of a square,
+  # positive definite matrix.
+  #
+  # Returns a matrix an upper triangular matrix u such
+  # that u * u.t is the original matrix.
+  def cholesky(x)
+    check_matrix_square(x)
+    begin
+      Decompose.cholesky(x)
+    rescue org.jblas.exceptions.LapackPositivityException
+      raise Errors::MatrixNotPositiveDefinite
+    end
+  end
+
+  # Compute the determinant of a square matrix.
+  #
+  # Internally computes the LU factorization and
+  # then takes the product of the diagonal elements.
   def det(x)
+    check_matrix_square(x)
     l, u, p = lup(x)
     return u.diag.prod
+  end
+
+  # Compute the singular value decompositon of a
+  # rectangular matrix.
+  #
+  # Returns matrices u, s, v such that u*diag(s)*v.t is
+  # the original matrix. Put differently, the columns of
+  # u are the left singular vectors, the columns of v are
+  # the right singular vectors, and s are the singular values.
+  def svd(x, sparse=false)
+    if sparse
+      usv = Singular.sparseSVD(x)
+    else
+      usv = Singular.fullSVD(x)
+    end
+    return usv.to_a
+  end
+
+  # Compute the singular values of a rectangular matrix.
+  def svdv(x)
+    Singular.SVDValues(x)
   end
 
   def tictoc

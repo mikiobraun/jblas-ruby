@@ -33,8 +33,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-module JBLAS
+module JBLAS 
   # When arguments to arithmetic operators are promoted via coerce, they
   # change their order. This class is a wrapper for the promoted self
   # which has <tt>-</tt> and <tt>/</tt> overloaded to call +rsub+ and

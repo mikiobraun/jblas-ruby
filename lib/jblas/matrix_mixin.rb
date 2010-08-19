@@ -1,4 +1,5 @@
-# Methods added to the Java classes are encoded as mixins in this file.
+# Methods added to the Java classes are encoded as mixins in this file. Defines
+# JBLAS::MatrixMixin.
 
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
@@ -44,7 +45,15 @@ module JBLAS
   # then used to automatically enrich the DoubleMatrix and FloatMatrix
   # classes.
   #
-  # See JBLAS for an overview.
+  # See JBLAS for an overview. You can also browse the different functions
+  # by section:
+  #
+  # * MatrixGeneralMixin - general methods
+  # * MatrixConvertMixin - converting matrices to other representations
+  # * MatrixArithMixin - arithmetic operations
+  # * MatrixEnumMixin - matrices as an Enumerable
+  # * MatrixAccessMixin - accessing elements
+  #   Java-side jblas.
   module MatrixMixin
     include MatrixGeneralMixin
     include MatrixConvertMixin

@@ -1,3 +1,5 @@
+# General matrix operations. Defines the JBLAS::MatrixGeneralMixin.
+
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
 #
@@ -118,26 +120,44 @@ module JBLAS
       DoubleMatrix.concat_vertically(self, y)
     end
 
+    # Returns a proxy of the matrix for which '*' is defined as elementwise.
+    #
+    # That is:
+    # * a * b => matrix multiplication
+    # * a.e * b => elementwise multiplication
+    #
+    # For extra coolness, try writing it as "a .e* b", such that it looks
+    # more like the ".e" belongs to the operator, not the object. (Not sure
+    # whether this is really worth it, though ;) )
     def e
       MatrixElementWiseProxy.new(self)
     end
 
+    # Returns a proxy for the matrix for which '*' is defined as the scalar
+    # product. See also +e+
+    #
+    # * a * b => matrix multiplication (a.mmul(b))
+    # * a .d* b => scalar product (a.dot(b))
     def d
       MatrixDotProxy.new(self)
     end
 
+    # Return a vector as row vector.
     def as_row
       return row_vector? ? self : t
     end
 
+    # Return a column vector.
     def as_column
       return column_vector? ? self : t
     end
 
+    # Return an array usable as an index.
     def to_index_array
       self
     end
 
+    # Save as ascii (tab-separated list, every row is a line)
     def save_ascii(fn)
       o = open(fn, 'w')
       rows.times do |i|
@@ -149,15 +169,5 @@ module JBLAS
       end
       o.close
     end
-
-    #def marshal_dump
-    #  [rows, columns, data.to_a]
-    #end
-
-    #def mashal_load(d)
-    #  puts "ouch"
-    #  resize(d[0], d[1])
-    #  d[2].each_with_index {|x,i| put(i, x)}
-    #end
-end
+  end
 end

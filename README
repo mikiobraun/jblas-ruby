@@ -1,12 +1,13 @@
-jblas-ruby 1.0 (possible one day)
+jblas-ruby - fast linear algebra for JRuby
 (c) 2009, 2010 by Mikio L. Braun
+
+Version 1.1, Release August 20, 2010
+
+(Note that version numbers are in sync with jblas, although jruby is somewhat
+less mature than jblas)
 
 jblas-ruby is a wrapper for JRuby of jblas (http://jblas.org), a linear algebra
 library for Java.
 
-You need to get jblas.jar for your platform to use jblas-ruby. See http://jblas.org
-
-jblas-ruby is currently in pretty ALPHA stage, although I already use
-it for my stuff, meaning that documentation is almost non-existent,
-method names are likely to change, and it might not work out of the
-box ;)
+To get a quick start, see examples/basic_arith.rb and the rdoc documentation for
+the JBLAS module.

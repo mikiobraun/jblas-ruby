@@ -1,3 +1,5 @@
+# Mixins and extensions for acessing elements.
+
 # Copyright (c) 2009-2010, Mikio L. Braun and contributors
 # All rights reserved.
 #
@@ -30,13 +32,13 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-class Numeric
+class Numeric # :nodoc:
   def to_jblas_index
     self
   end
 end
 
-module Enumerable
+module Enumerable # :nodoc:
   def to_jblas_index
     to_a.to_java :int
   end
@@ -47,7 +49,9 @@ module JBLAS
   #
   # This mixin is collected into MatrixMixin.
   module MatrixAccessMixin
-    # Get the entry at _i_, _j_
+    # Get the entry at _i_, _j_. If _j_ is omitted, linear
+    # addressing is used (that is, _i_ just enumerates all entries
+    # going down rows first.)
     def [](i, j=nil)
       if j
         get(i.to_jblas_index, j.to_jblas_index)
@@ -56,7 +60,9 @@ module JBLAS
       end
     end
 
-    # Set the entry at _i_, _j_ to _v_.
+    # Set the entry at _i_, _j_ to _v_.  If _j_ is omitted, linear
+    # addressing is used (that is, _i_ just enumerates all entries
+    # going down rows first.)
     def []=(i, j, v=nil)
       if v
         put(i.to_jblas_index, j.to_jblas_index, v)
@@ -65,34 +71,18 @@ module JBLAS
       end
     end
 
-    # <tt>column(i)</tt> returns the <em>i</em>th column. You can assign
-    # to <tt>column(i)</tt>, for example <tt>a.column(i) = v</tt>,
+    # column(i) returns the _i_ th column. You can assign
+    # to column(i), for example a.column(i) = v,
     # if +v+ is a vector, or you can access the entries of the column via
-    # <tt>a.column(i)[j] = 1.0</tt>
+    # a.column(i)[j] = 1.0.
     def column(i)
       MatrixColumnProxy.new(self, i)
     end
 
-    # Return a matrix whose columns are specified by +indices+. You
-    # actually obtain a copy of those columns.
-    #def columns(indices)
-    #  cols = indices.map {|i| column_vector(i)}.to_java DoubleVector
-    #  #cols = getColumnVectors(indices.to_java :int)
-    #  DoubleMatrix.fromColumnVectors cols
-    #end
-
-    # <tt>row(i)</tt> returns the <em>i</em>th row. You can assign
-    # to <tt>row(i)</tt>, for example <tt>a.row(i) = v</tt>,
-    # if +v+ is a vector.
-    def row_proxy(i)
+    # row(i) returns the _i_ th row. You can assign
+    # to row(i), for example a.row(i) = v, if +v+ is a vector.
+    def row(i)
       MatrixRowProxy.new(self, i)
     end
-
-    # Return a matrix whose rows are specified by +indices+. You
-    # actually obtain a copy of these rows.
-    #def rows(indices)
-    #  rows = indices.map {|i| row_vector(i)}.to_java DoubleVector
-    #  DoubleMatrix.fromRowVectors rows
-    #end
   end
 end
