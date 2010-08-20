@@ -99,4 +99,12 @@ class TestJblasFunctions < Test::Unit::TestCase
     x = mat[[1,2,3],[4,5,6],[7,8,4]]
     assert_in_delta 15.0, det(x), 1e-3
   end
+
+  def test_svd
+    x = mat[[1,3,5],[2,4,6],[3,2,1]]
+
+    u, s, v = svd(x)
+
+    assert_in_delta 0.0, norm(x - u*diag(s)*v.t, :inf), 1e-9
+  end
 end

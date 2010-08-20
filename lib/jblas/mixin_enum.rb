@@ -39,8 +39,7 @@ module JBLAS
   module MatrixEnumMixin
     include Enumerable
     
-    # Iterate over rows. This is also what a plain +each+ does,
-    # such that a matrix looks like an array of its rows.
+    # Iterate over rows. 
     def each_row
       (0...rows).each do |i|
         yield row(i)
@@ -54,28 +53,31 @@ module JBLAS
       end
     end
 
-    def map_column
-      (0...columns).map do |j|
-        yield column(j)
-      end
-    end
-
-    # +each+ iterates over each element
+    # Each iterates over each element, going down rows first.
     def each
       (0...length).each do |i|
         yield get(i)
       end
     end
 
+    # Map each element.
+    #
+    # Returns a new matrix of the same type. This means that the block
+    # must return something which can again be stored in the matrix.
+    def map(&block)
+      return dup.map!(&block)
+    end
+
+    # Map each element and store the result in the matrix.
+    #
+    # Note that the result must be again something
+    # which can be stored in the matrix. Otherwise you should do an
+    # to_a first.
     def map!(&block)
       (0...length).each do |i|
         put(i, block.call(get(i)))
       end
-      return self
+      self
     end
-
-    def map(&block)
-      return dup.map!(&block)
-    end 
   end
 end

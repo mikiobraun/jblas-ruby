@@ -15,13 +15,6 @@ class TestJBLAS < Test::Unit::TestCase
     @x = DoubleMatrix.new(3, 3, [1,2,3,4,5,6,7,8,9].to_java(:double))
   end
   
-  def test_to_ary
-    assert_equal [[1,4,7],[2,5,8],[3,6,9]], @x.to_ary
-    assert_equal [1,2,3], mat[1,2,3].to_ary
-    assert_equal [1,2,3], mat[[1],[2],[3]].to_ary
-    assert_equal [[1,2,3]], mat[[1,2,3]].to_ary
-  end
-
   def test_reshape
     assert_equal mat[[1,2,3,4,5,6,7,8,9]], @x.reshape(1,9)
     assert_equal mat[1,2,3,4,5,6,7,8,9], @x.reshape(9,1)

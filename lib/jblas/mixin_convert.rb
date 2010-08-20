@@ -37,6 +37,18 @@ module JBLAS
   #
   # Collected in MatrixMixin.
   module MatrixConvertMixin
+    # Convert this matrix to a string.
+    #
+    # This methods takes a few extra arguments to control how the result looks
+    # like.
+    #
+    # +fmt+ is a format as used by sprintf, +coljoin+ is the string used to
+    # join column, +rowjoin+ is what is used to join rows. For example,
+    #
+    #    x.to_s('%.1f', ' ', "\n")
+    #
+    # Returns a matrix where columns are separated by spaces, rows by newlines
+    # and each element is shown with one digit after the comma.
     def to_s(fmt=nil, coljoin=', ', rowjoin='; ')
       if fmt
         x = to_ary
@@ -52,24 +64,33 @@ module JBLAS
       end
     end
 
+    # Return an a representation of this object.
     def inspect
       s = "<#{self.class} of size #{rows} #{columns}: #{to_s}>"
     end
 
-    def to_ary #:nodoc:
-      if columns == 1
-        (0...length).map {|i| get(i)}
-      else
-        (0...rows).map do |i|
-          (0...columns).map do |j|
-            get(i,j)
-          end
-        end
+    def rows_to_a
+      (0...rows).map do |i|
+        row(i).to_a
       end
     end
 
+    def columns_to_a
+      (0...columns).map do |j|
+        column(j).to_a
+      end
+    end
+    
+    # Convert the matrix to an array.
+    #
+    # If the matrix
+    def to_ary
+      to_a
+    end
+
+    # Return the matrix as an Enumerable (just returns self).
     def to_a #:nodoc:
-      self
+      data.to_a
     end
 
     def to_mat #:nodoc:

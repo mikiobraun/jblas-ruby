@@ -4,7 +4,7 @@ require 'pp'
 
 include JBLAS
 
-class TestJblasAccess < Test::Unit::TestCase
+class TestJblasMixinAccess < Test::Unit::TestCase
   def setup
     # Looks like this:
     #
