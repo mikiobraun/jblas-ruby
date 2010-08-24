@@ -24,3 +24,14 @@
 # you don't need to be proficient in jblas to be able to work with jblas.
 # Occasionally, things may just not work the way you expect them due to some
 # strange typing error. I apologize for all the cases where this happens.
+#
+# Finally, if you're already familiar to jblas, here is a short overview of
+# how Java names translate to JRuby ones:
+#
+# * methods are translated from CamelCase to underscore_style. So x.getRows()
+#   becomes x.get_rows().
+# * argument parenthesis are optional, so x.getRows() becomes x.get_rows.
+# * Bean-like methods can be accessed as attributes. Another way to call x.getLength is
+#   x.length. Likewise, x.setLength(i) becomes x.length = i.
+# * Packages are converted from the dot.interleaving.style to CamelCase and prefixed
+#   with Java::. So org.jblas.DoubleMatrix becomes Java::OrgJblas::DoubleMatrix.

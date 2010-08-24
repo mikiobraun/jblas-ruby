@@ -54,11 +54,6 @@ class Array
   def to_matlab_string
     '[' + map{|e| e.to_s}.join(', ') + ']'
   end
-
-  # Convert an array to an array useable for indexing.
-  def to_index_array
-    to_java :int
-  end
 end
 
 # Extensions to Ruby's Range class

@@ -255,18 +255,6 @@ module JBLAS
     end
 
     include MatrixMixin
-
-    alias get_columns_java get_columns
-    def get_columns(indices)
-      indices = indices.to_a.to_index_array
-      get_columns_java(indices)
-    end
-
-    alias get_rows_java get_rows
-    def get_rows(indices)
-      indices = indices.to_a.to_index_array
-      get_rows_java(indices)
-    end
   end
  
   # Matrix for storing float values.

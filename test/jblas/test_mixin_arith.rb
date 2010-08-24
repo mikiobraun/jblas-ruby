@@ -26,6 +26,5 @@ class TestJblasMixinArith < Test::Unit::TestCase
     assert_equal mat[[1,0,0],[1,0,0],[0,0,0]], @x < 3
     assert_equal mat[[0,0,0],[1,0,0],[1,0,0]], ((@x <= 3) & (@x > 1))
     assert_equal mat[[1,1,1],[0,1,1],[0,1,1]], ((@x <= 3) & (@x > 1)).not
-    #assert_equal Array, @x.select {|z| z <= 5}.class
   end
 end

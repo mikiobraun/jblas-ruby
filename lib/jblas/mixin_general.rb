@@ -32,6 +32,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+require 'jblas/proxies'
+
 module JBLAS
   # Mixin for general operations not fitting in any other category.
   #
@@ -41,6 +43,13 @@ module JBLAS
     # Some operations are not possible on such views, for example
     # most in-place operations. For such, do a +compact+ first.
     def t; transpose; end
+
+    if false
+      # Transpose the matrix. See t.
+      def transpose
+        JAVA_METHOD
+      end
+    end
 
     # Get the size of the matrix as <tt>[rows, columns]</tt>
     def dims
@@ -124,13 +133,13 @@ module JBLAS
     #
     # That is:
     # * a * b => matrix multiplication
-    # * a.e * b => elementwise multiplication
+    # * a.e * b => element wise multiplication
     #
     # For extra coolness, try writing it as "a .e* b", such that it looks
     # more like the ".e" belongs to the operator, not the object. (Not sure
     # whether this is really worth it, though ;) )
     def e
-      MatrixElementWiseProxy.new(self)
+      JBLAS::MatrixElementWiseProxy.new(self)
     end
 
     # Returns a proxy for the matrix for which '*' is defined as the scalar
@@ -142,19 +151,39 @@ module JBLAS
       MatrixDotProxy.new(self)
     end
 
+    if false
+      # Returns true if self is a vector
+      def vector?; JAVA_METHOD; end
+
+      # Returns true if self is a row vector.
+      def row_vector?; JAVA_METHOD; end
+
+      # Returns true if self is a column vector.
+      def column_vector?; JAVA_METHOD; end
+
+      # Returns true if self is a scalar.
+      def scalar?; JAVA_METHOD; end
+
+      # Returns the first entry of self.
+      def scalar; JAVA_METHOD; end
+    end
+
     # Return a vector as row vector.
     def as_row
-      return row_vector? ? self : t
+      unless vector?
+        self
+      else
+        row_vector? ? self : self.t
+      end
     end
 
     # Return a column vector.
     def as_column
-      return column_vector? ? self : t
-    end
-
-    # Return an array usable as an index.
-    def to_index_array
-      self
+      unless vector?
+        self
+      else
+        column_vector? ? self : self.t
+      end
     end
 
     # Save as ascii (tab-separated list, every row is a line)

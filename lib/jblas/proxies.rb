@@ -32,8 +32,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-puts "Hello World"
-
 module JBLAS
   class MatrixElementWiseProxy
     def initialize(matrix)
@@ -53,27 +51,5 @@ module JBLAS
     def *(other)
       @matrix.dot(other)
     end
-  end
-
-  class MatrixColumnProxy
-    def initialize(matrix, column)
-      @matrix = matrix
-      @column = column
-    end
-    def [](i); @matrix.get(i, @column); end
-    def []=(i, v); @matrix.put(i, @column, v); end
-    def to_mat; @matrix.get_column(@column); end
-    def to_a; (0...@matrix.rows).map {|i| @matrix.get(i, @column)}; end
-  end
-
-  class MatrixRowProxy
-    def initialize(matrix, row)
-      @matrix = matrix
-      @row = row
-    end
-    def [](i); @matrix.get(@row, i); end
-    def []=(i, v); @matrix.put(@row, i, v); end
-    def to_mat; @matrix.get_row(@column); end
-    def to_a; (0...@matrix.columns).map {|j| @matrix.get(@row, j)}; end
   end
 end

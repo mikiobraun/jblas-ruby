@@ -31,9 +31,9 @@ class TestJblasMixinAccess < Test::Unit::TestCase
   end
 
   def test_rows_and_columns
-    assert_equal mat[[1,4,7,10]], @x.getRow(0)
-    assert_equal mat[[2,5,8,11]], @x.getRow(1)
-    assert_equal mat[[3,6,9,12]], @x.getRow(2)
+    assert_equal mat[[1,4,7,10]], @x.get_row(0)
+    assert_equal mat[[2,5,8,11]], @x.get_row(1)
+    assert_equal mat[[3,6,9,12]], @x.get_row(2)
 
     assert_equal mat[[1,4,7,10]], @x.row(0)
     assert_equal mat[[2,5,8,11]], @x.row(1)
@@ -53,50 +53,33 @@ class TestJblasMixinAccess < Test::Unit::TestCase
     @x.swap_rows 0, 1
   end
 
-  def test_each_row
-    rs = [ mat[[1,4,7,10]], mat[[2,5,8,11]], mat[[3,6,9,12]] ]
-    c = 0
-    @x.each_row do |r|
-      assert_equal rs[c], r
-      c += 1
-    end
-  end
-
-  def test_each_column
-    cs = [mat[1,2,3],mat[4,5,6],mat[7,8,9],mat[10,11,12]]
-    i = 0
-    @x.each_column do |c|
-      assert_equal cs[i], c
-      i += 1
-    end
-  end
-
-  def test_slices
+  def test_array_indices
     y = mat[0,1,2,3,4,5]
     assert_equal mat[1,3,5], y[[1, 3, 5]]
 
     y[[0, 1, 2, 3]] = mat[0, -1, -2, -3]
     assert_equal mat[0, -1, -2, -3, 4, 5], y
-    #puts "x[[0,2,4,6,8]] = #{x[[0,2,4,6,8]]}"
-    #puts "x[[0,2],[0,1]] = #{x[[0,2],  [0,1]]}"
-    #puts "x[0...5] = #{x[0...5]}"
-    #puts "(x < 5).find_indices = #{(x < 5).find_indices.to_a.inspect}"
-    #i = (x < 5).find_indices
-    #puts "x.get(i) = #{x.get(i)}"
-    #puts "x[i] = #{x[i]}"
-
-    #xx = x.dup
-    #x[(x < 5).find_indices] = mat[2,1,2,1]
-    #puts "x[(x < 5).find_indices] = mat[2,1,2,1,2] => x = #{x}"
-    #x = xx
-
-    #xx = x.dup
-    #x[x < 5] = -1
-    #puts "x[x < 5] = -1 => x = #{x}"
-    #x = xx
 
     x = mat[[1,2],[3,4],[5,6]]
-    assert_equal mat[[1, 2], [5, 6]], x.get_rows([0, 2].to_java :int)
-    assert_equal mat[[1, 2], [1, 2]], x.get_rows([0, 0].to_java :int)
+    assert_equal mat[[1, 2], [5, 6]], x.get_rows([0, 2].to_indices)
+    assert_equal mat[[1, 2], [1, 2]], x.get_rows([0, 0].to_indices)
+  end
+
+  def test_matrix_indices
+    y = mat[0,1,2,3,4,5]
+    assert_equal mat[1,3,5], y[mat[0, 1, 0, 1, 0, 1]]
+
+    y[mat[1, 1, 1, 1, 0, 0]] = mat[0, -1, -2, -3]
+    assert_equal mat[0, -1, -2, -3, 4, 5], y
+
+    x = mat[[1,2],[3,4],[5,6]]
+    assert_equal mat[[1, 2], [5, 6]], x.get_rows(mat[1, 0, 1])
+    assert_equal mat[[1, 2]], x.get_rows(mat[1, 0, 0])
+  end
+
+  def test_row_and_column_ranges
+    assert_equal mat[4,5], @x.get_row_range(0, 2, 1)
+    assert_equal mat[4,7].t, @x.get_column_range(0, 1, 3)
+    assert_equal mat[[8,11],[9,12]], @x.get_range(1, 3, 2, 4)
   end
 end
