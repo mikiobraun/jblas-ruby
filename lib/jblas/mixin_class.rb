@@ -36,10 +36,22 @@ module JBLAS
   # Mixin for the Matrix classes. These basically add the [] construction
   # method (such that you can say DoubleMatrix[1,2,3]
   module MatrixClassMixin
+    # Create a new matrix. For example, you can say DoubleMatrix[1,2,3].
+    # 
+    # See also from_array.
     def [](*data)
       from_array data
     end
 
+    # Create a new matrix. There are two ways to use this function
+    #
+    # <b>pass an array</b>::
+    #   Constructs a column vector. For example: DoubleMatrix.from_array 1, 2, 3
+    # <b>pass an array of arrays</b>::
+    #   Constructs a matrix, inner arrays are rows. For
+    #   example: DoubleMatrix.from_array [[1,2,3],[4,5,6]]
+    #
+    # See also [], JBLAS#mat
     def from_array(data)
       n = data.length
       if data.reject{|l| Numeric === l}.size == 0

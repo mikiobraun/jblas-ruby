@@ -76,5 +76,17 @@ module JBLAS
         [ReversedArithmetic.new(self), o]
       end
     end
+
+    # Compute the square root
+    def sqrt; JAVA_METHOD; end
+
+    # Get the length of the complex number
+    def abs; JAVA_METHOD; end
+
+    # Get the angle of the complex number
+    def arg; JAVA_METHOD; end
+
+    # Get the conjugate of the complex number
+    def conj; JAVA_METHOD; end
   end
 end

@@ -35,10 +35,17 @@
 module JBLAS
   # This modules contains special exceptions raised by JBLAS.
   module Errors
-    # The routine required a positive definite matrix
-    class MatrixNotPositiveDefinite < StandardError
+    # The routine required a positive definite matrix.
+    class MatrixNotPositiveDefinite < ArgumentError
       def initialize
         super "Matrix is not positive definite."
+      end
+    end
+
+    # The routine required a square matrix.
+    class MatrixNotSquare < ArgumentError
+      def initialize
+        super "Matrix is not square."
       end
     end
   end

@@ -43,10 +43,10 @@ module JBLAS
   #
   ######################################################################
 
-  # Check whether matrix is square. Raises ArgumentError if it isn't.
+  # Check whether matrix is square. Raises Errors::MatrixNotSquare if it isn't.
   def check_matrix_square(m)
     unless m.square?
-      raise ArgumentError, "Matrix is not square."
+      raise Errors::MatrixNotSquare
     end
   end
 
@@ -73,6 +73,8 @@ module JBLAS
   # Construct a matrix of all zeros.
   #
   #   zeros(2, 3) == mat[[0, 0, 0],[0, 0, 0]]
+  #
+  # If the second argument is omitted, a column vector is constructed.
   def zeros(n,m=nil)
     if m
       mat.zeros(n,m)
@@ -84,6 +86,8 @@ module JBLAS
   # Construct a matrix of all ones.
   #
   #   ones(2, 3) == mat[[1, 1, 1],[1, 1, 1]]
+  #
+  # If the second argument is omitted, a column vector is constructed.
   def ones(n,m=nil)
     if m
       mat.ones(n,m)
@@ -108,8 +112,9 @@ module JBLAS
   end
 
   # Construct a matrix or vector with elements randomly
-  # drawn uniformly from [0, 1]. With one argument, construct
-  # a vector, with two a matrix.
+  # drawn uniformly from [0, 1].
+  #
+  # If the second argument is omitted, a column vector is constructed.
   def rand(n=1,m=nil)
     if m
       mat.rand(n,m)
@@ -121,6 +126,8 @@ module JBLAS
   # Construct a matrix or vector with elements randomly drawn from a
   # Gaussian distribution with mean 0 and variance 1. With one
   # argument, construct a vector, with two a matrix.
+  #
+  # If the second argument is omitted, a column vector is constructed.
   def randn(n=1,m=nil)
     if m
       mat.randn(n,m)
@@ -193,12 +200,11 @@ module JBLAS
 
   # Computing the eigenvalues of matrix.
   def eig(x)
-    raise(ArgumentError,
-          'eigenvalues only defined for square matrices') unless x.square?
+    check_matrix_square(x)
     if x.symmetric?
       return Eigen.symmetric_eigenvalues(x)
     else
-      raise 'General eigenvalues not implemented (yet)'
+      return Eigen.eigenvalues(x)
     end
   end
 
@@ -209,11 +215,11 @@ module JBLAS
   # u are the eigenvalues and v is a diagonal matrix containing the
   # eigenvalues
   def eigv(x)
-    JBLAS::check_matrix_square(x)
+    check_matrix_square(x)
     if x.symmetric?
-      return Eigen.symmetric_eigenvectors(x)
+      return Eigen.symmetric_eigenvectors(x).to_a
     else
-      raise 'General eigenvectors not implemented (yet)'
+      return Eigen.eigenvectors(x).to_a
     end
   end
 
@@ -234,12 +240,16 @@ module JBLAS
     end
   end
 
-  # Returns the horizontal concatenation of all arguments
+  # Returns the horizontal concatenation of all arguments.
+  #
+  # See also MatrixGeneralMixin#hcat.
   def hcat(*args)
     args.map {|s| s.to_matrix}.inject{|s,x| s = s.hcat x}
   end
 
   # Returns the vertical concatenation of all arguments
+  # 
+  # See also MatrixGeneralMixin#vcat.
   def vcat(*args)
     args.map {|s| s.to_matrix}.inject{|s,x| s = s.vcat x}
   end
@@ -255,7 +265,8 @@ module JBLAS
     m.to_matrix.repmat(r, c)
   end
 
-  # Generate an array of linearily spaced points.
+  # Generate an array of n linearly spaced points starting at a, ending
+  # at b.
   def linspace(a, b, n)
     (0...n).map do |i|
       t = Float(i) / (n-1)
@@ -263,7 +274,8 @@ module JBLAS
     end
   end
 
-  # Generate an array of logarithmically spaced points.
+  # Generate an array of n logarithmically spaced points starting at
+  # 10^a and ending at 10^b.
   def logspace(a, b, n)
     (0...n).map do |i|
       t = Float(i) / (n-1)
@@ -281,7 +293,7 @@ module JBLAS
     return x
   end
 
-  # The sum of a vector.
+  # The sum of a vector. See also
   def sum(x)
     x.sum
   end
@@ -370,6 +382,20 @@ module JBLAS
     Singular.SVDValues(x)
   end
 
+  #########################################################################
+  #
+  # Utilities
+  #
+  #########################################################################
+
+  # Times a block and returns the elapsed time in seconds.
+  #
+  # For example:
+  #
+  #   tictoc { n = 100; x = randn(n, n); u, d = eigv(x) }
+  #
+  # Times how long it takes to generate a random 100*100 matrix and compute
+  # its eigendecomposition.
   def tictoc
     saved_time = Time.now
     yield

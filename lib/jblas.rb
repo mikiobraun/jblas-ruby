@@ -51,6 +51,7 @@ require 'jblas/functions'
 require 'jblas/arith'
 require 'jblas/complex'
 require 'jblas/errors'
+require 'jblas/mixin_complex_matrix'
 
 # The jblas module provides matrix classes and functions to
 # comfortably work with the matrices.
@@ -70,7 +71,13 @@ require 'jblas/errors'
 # to make them work as seamlessly as possible with the norm built-in Ruby
 # numerical types.
 #
+# Technically, jblas-ruby is organized in a number of mixins which are included
+# in the Java objects to add syntactic sugar and make the objects play well
+# with Ruby. Links to these mixins are included in each section.
+#
 # = Creation
+#
+# <em>See also JBLAS::MatrixClassMixin, mat</em>
 #
 # You create a matrix or vector explicitly by using the
 # DoubleMatrix[], or FloatMatrix[] constructor. For example:
@@ -279,6 +286,7 @@ module JBLAS
       include MatrixClassMixin
     end
     include MatrixMixin
+    include ComplexMatrixMixin
   end
 
   # Matrix for storing complex float values.
@@ -291,6 +299,7 @@ module JBLAS
       include MatrixClassMixin
     end
     include MatrixMixin
+    include ComplexMatrixMixin
   end
 
   # Double precision complex number.
@@ -308,4 +317,6 @@ module JBLAS
   class ComplexFloat
     include ComplexMixin
   end
+
+  I = ComplexDouble::I
 end

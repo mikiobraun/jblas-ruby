@@ -51,7 +51,7 @@ module JBLAS
     # and each element is shown with one digit after the comma.
     def to_s(fmt=nil, coljoin=', ', rowjoin='; ')
       if fmt
-        x = to_ary
+        x = rows_to_a
         '[' + x.map do |r|
           if Enumerable === r
             r.map {|e| sprintf(fmt, e)}.join(coljoin)
