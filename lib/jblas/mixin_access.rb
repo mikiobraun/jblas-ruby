@@ -44,10 +44,9 @@ module Enumerable # :nodoc:
   end
 end
 
-class Array # :nodoc:
-    # Convert an array to an array useable for indexing.
+module Java::OrgJblasRanges::Range
   def to_indices
-    to_java :int
+    self
   end
 end
 
@@ -145,5 +144,12 @@ module JBLAS
     def to_indices
       self
     end
+  end
+
+  module_function
+
+  # Convenience function for converting arbitrary objects into indices.
+  def idx(i)
+    i.to_indices
   end
 end

@@ -1,3 +1,35 @@
+# Copyright (c) 2009-2010, Mikio L. Braun and contributors
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#
+#     * Neither the name of the Technische Universität Berlin nor the
+#       names of its contributors may be used to endorse or promote
+#       products derived from this software without specific prior
+#       written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 require 'test/unit'
 require 'jblas'
 require 'pp'
@@ -61,8 +93,8 @@ class TestJblasMixinAccess < Test::Unit::TestCase
     assert_equal mat[0, -1, -2, -3, 4, 5], y
 
     x = mat[[1,2],[3,4],[5,6]]
-    assert_equal mat[[1, 2], [5, 6]], x.get_rows([0, 2].to_indices)
-    assert_equal mat[[1, 2], [1, 2]], x.get_rows([0, 0].to_indices)
+    assert_equal mat[[1, 2], [5, 6]], x.get_rows(idx [0, 2])
+    assert_equal mat[[1, 2], [1, 2]], x.get_rows(idx [0, 0])
   end
 
   def test_matrix_indices
@@ -81,5 +113,14 @@ class TestJblasMixinAccess < Test::Unit::TestCase
     assert_equal mat[4,5], @x.get_row_range(0, 2, 1)
     assert_equal mat[4,7].t, @x.get_column_range(0, 1, 3)
     assert_equal mat[[8,11],[9,12]], @x.get_range(1, 3, 2, 4)
+  end
+
+  def test_range_range
+    assert_equal mat[1,4,7].t, @x[0, 0...3]
+    assert_equal mat[1,4,7,10].t, @x[0, 0..3]
+  end
+
+  def test_range_combinations
+    assert_equal mat[[4.0, 7.0, 10.0],[5.0, 8.0, 11.0],[6.0, 9.0, 12.0]], @x[0..2, [1,2,3]]
   end
 end

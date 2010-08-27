@@ -91,32 +91,45 @@ require 'jblas/mixin_complex_matrix'
 #      2.0
 #      3.0
 #
-# Since typing DoubleMatrix all the time is a bit cumbersome, jblas
-# also provides the two shorthands mat and vec, which default to 
-# the Double* counterparts.
+# Since typing DoubleMatrix all the time is a bit cumbersome, jblas also
+# provides the mat function which is a short-hand for DoubleMatrix[...]:
+#
+#   mat[1,2,3]
+#   => 1.0
+#      2.0
+#      3.0
 #
 # Apart from these constructors, there are few more functions which
-# generate matrices or vectiors:
+# generate matrices or vectors:
 #
 # * zeros(n), and zeros(n,m): vector or matrix of zeros.
-# * ones - a vector or matrix of ones.
-# * rand - a vector or matrix whose elements are drawn uniformly in [0,1]
-# * randn - elemens are drawn from normal Gaussian distribution 
-# * diag - return diagonal of a matrix or matrix with given diagonal
-# * eye - identity matrix
+# * ones(...) - a vector or matrix of ones.
+# * rand(...) - a vector or matrix whose elements are drawn uniformly in [0,1]
+# * randn(...) - elemens are drawn from normal Gaussian distribution
+# * diag(x) - return diagonal of a matrix or matrix with given diagonal
+# * eye(n) - identity matrix
 # * x.hcat(y) - returns the horizontal concatenation of x and y
 # * x.vcat(y) - returns the vertical concatenation of x and y
 #
+# hcat and vcat also exist as methods which take an arbitrary number of arguments
+# and returns the horizontal or vertical concatenation of its arguments.
 #
 # = Accessing elements
+#
+# <em>See also JBLAS::MatrixAccessMixin.</em>
 #
 # To access individual elements, use the [] or []= methods, or +get+, and +put+
 # respectively.
 #
-# To access whole rows or columns, use a.column[i] or a.row[i].
+# Rows and columns can be accessed with get_row, put_row and get_column, put_column.
 #
+# You can also often use ranges or enumerables with [] and []=, for example
+#
+#   x[0..2, [1,2,3]]
 #
 # = Arithmetics
+#
+# <em>See also JBLAS::MatrixAccessMixin.</em>
 #
 # Arithmetic is defined using the usual operators, that is
 # 
@@ -124,23 +137,18 @@ require 'jblas/mixin_complex_matrix'
 # * addition: a + b
 # * subtraction: a - b
 #
-# Multiplication is the usual (linear algebra) multiplication. Apart
-# from these shorthands, you can also call the explicit underlying
-# methods. These also give you more control over the generation
-# of temporary objects. The suffix "i" indicates that the computation
+# Multiplication is the usual (linear algebra) multiplication.
+# 
+# There exist also non-operator versions (which are the original Java functions)
+# These also give you more control over the generation
+# of temporary objects. The suffix "!" or "i" indicates that the computation
 # is performed in-place on the left operand.
 #
-# * (matrix-)multiplication: a.mmul(b), a.mmuli(b)
-# * elementwise multiplication: a.mul(b), a.muli(b)
-# * addition: a.add(b), a.addi(b)
-# * subtraction: a.sub(b), a.subi(b)
-# * elementwise division: a.div(b), a.divi(b)
-#
-# Finally, a perculiar feature of jblas is that complex views of
-# matrices cannot be used in in-place operations. The reason is that
-# in-place operations like addition match to vector addition and BLAS
-# vectors are not capable of representing sub-matrices. The solution
-# is to call +compact+ before doing the addition.
+# * (matrix-)multiplication: a.mmul(b), a.mmul!(b)
+# * elementwise multiplication: a.mul(b), a.mul!(b)
+# * addition: a.add(b), a.add!(b)
+# * subtraction: a.sub(b), a.sub!(b)
+# * elementwise division: a.div(b), a.div!(b)
 #
 # Some special functions exist for adding the same column vector to
 # all columns of a matrix, or row vector to all rows:
@@ -150,17 +158,12 @@ require 'jblas/mixin_complex_matrix'
 #
 # = Matrix and Vectors as Enumerables
 #
-# Both the matrices and vectors implement the Enumerable mixin. Matrices
-# behave as if they are an array of the rows of a matrix, just as in
-# construction. That is,
+# <em>See also JBLAS::MatrixEnumMixin.</em>
 #
-#   mat[[1,2,3],[4,5,6]].each do |row|
-#     puts row
-#   end
-#   => [1,2,3]
-#   [4,5,6]
-#
-# prints the two DoubleVectors which constitute the rows.
+# Both the matrices and vectors implement the Enumerable mixin. Matrices behave
+# as if they are a linear array of their elements (going down rows first). If
+# you want to iterate over rows or columns, use the rows_to_a or columns_to_a methods,
+# as well as each_row and each_column.
 #
 # = Functions
 #
