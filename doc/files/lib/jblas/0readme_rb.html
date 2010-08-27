@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: 0readme.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>0readme.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/jblas/0readme.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Fri Aug 27 17:16:28 +0200 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+jblas-ruby - fast linear algebra for JRuby (c) 2009-2010 by Mikio L. Braun
+and contributors
+</p>
+<p>
+Version 1.1.1, August 27, 2010 (jblas-ruby follows jblas (<a
+href="http://jblas.org">jblas.org</a>) version numbers, although jblas-ruby
+is somewhat more unstable)
+</p>
+<p>
+Homepage: <a
+href="http://mikiobraun.github.com/jblas-ruby">mikiobraun.github.com/jblas-ruby</a>/
+</p>
+<p>
+This is only the rdoc starting page. For more information, have a look at
+the <a href="../../../classes/JBLAS.html">JBLAS</a> module.
+</p>
+<p>
+jblas-ruby is under a BSD style license. See the file COPYING.
+</p>
+<h1>Relationship to jblas</h1>
+<p>
+jblas-ruby started as being a somewhat thin layer around the jblas library.
+In the beginning, I only added syntatic sugar for arithmetic operations.
+From that, jblas-ruby has evolved somewhat towards a more M*TLAB like
+environment. For example, many methods like DoubleMatrix#diag are also
+available as functions such that you can say the more natural diag(x)
+instead of x.diag.
+</p>
+<p>
+I also tried to cover most of the <a
+href="../../../classes/Java.html">Java</a> methods in the documentation,
+such that you don&#8216;t need to be proficient in jblas to be able to work
+with jblas. Occasionally, things may just not work the way you expect them
+due to some strange typing error. I apologize for all the cases where this
+happens.
+</p>
+<p>
+Finally, if you&#8216;re already familiar to jblas, here is a short
+overview of how <a href="../../../classes/Java.html">Java</a> names
+translate to JRuby ones:
+</p>
+<ul>
+<li>methods are translated from CamelCase to underscore_style. So x.getRows()
+becomes x.get_rows().
+
+</li>
+<li>argument parenthesis are optional, so x.getRows() becomes x.get_rows.
+
+</li>
+<li>Bean-like methods can be accessed as attributes. Another way to call
+x.getLength is x.length. Likewise, x.setLength(i) becomes x.length = i.
+
+</li>
+<li>Packages are converted from the dot.interleaving.style to CamelCase and
+prefixed with <a href="../../../classes/Java.html">Java</a>::. So
+org.jblas.DoubleMatrix becomes Java::OrgJblas::DoubleMatrix.
+
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: JBLAS::MatrixGeneralMixin</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">JBLAS::MatrixGeneralMixin</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/jblas/mixin_general_rb.html">
+                lib/jblas/mixin_general.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Mixin for general operations not fitting in any other category.
+</p>
+<p>
+Collected in <a href="MatrixMixin.html">MatrixMixin</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000142">as_column</a>&nbsp;&nbsp;
+      <a href="#M000141">as_row</a>&nbsp;&nbsp;
+      <a href="#M000127">check_column_index</a>&nbsp;&nbsp;
+      <a href="#M000128">check_row_index</a>&nbsp;&nbsp;
+      <a href="#M000138">column_vector?</a>&nbsp;&nbsp;
+      <a href="#M000135">d</a>&nbsp;&nbsp;
+      <a href="#M000125">dims</a>&nbsp;&nbsp;
+      <a href="#M000134">e</a>&nbsp;&nbsp;
+      <a href="#M000132">hcat</a>&nbsp;&nbsp;
+      <a href="#M000130">inv</a>&nbsp;&nbsp;
+      <a href="#M000137">row_vector?</a>&nbsp;&nbsp;
+      <a href="#M000143">save_ascii</a>&nbsp;&nbsp;
+      <a href="#M000140">scalar</a>&nbsp;&nbsp;
+      <a href="#M000139">scalar?</a>&nbsp;&nbsp;
+      <a href="#M000126">size</a>&nbsp;&nbsp;
+      <a href="#M000131">solve</a>&nbsp;&nbsp;
+      <a href="#M000129">symmetric?</a>&nbsp;&nbsp;
+      <a href="#M000123">t</a>&nbsp;&nbsp;
+      <a href="#M000124">transpose</a>&nbsp;&nbsp;
+      <a href="#M000133">vcat</a>&nbsp;&nbsp;
+      <a href="#M000136">vector?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000142" class="method-detail">
+        <a name="M000142"></a>
+
+        <div class="method-heading">
+          <a href="#M000142" class="method-signature">
+          <span class="method-name">as_column</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return a column vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000142-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 181</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_column</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">vector?</span>
+        <span class="ruby-keyword kw">self</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">column_vector?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">t</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000141" class="method-detail">
+        <a name="M000141"></a>
+
+        <div class="method-heading">
+          <a href="#M000141" class="method-signature">
+          <span class="method-name">as_row</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return a vector as row vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000141-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 172</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_row</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">vector?</span>
+        <span class="ruby-keyword kw">self</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">row_vector?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">t</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000127" class="method-detail">
+        <a name="M000127"></a>
+
+        <div class="method-heading">
+          <a href="#M000127" class="method-signature">
+          <span class="method-name">check_column_index</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Check whether the column index <tt>i</tt> is valid.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000127-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 66</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_column_index</span>(<span class="ruby-identifier">i</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-value">0</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">columns</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-value str">&quot;column index out of bounds&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000128" class="method-detail">
+        <a name="M000128"></a>
+
+        <div class="method-heading">
+          <a href="#M000128" class="method-signature">
+          <span class="method-name">check_row_index</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Check whether the row index <tt>i</tt> is valid.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000128-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 73</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_row_index</span>(<span class="ruby-identifier">i</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-value">0</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">rows</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-value str">&quot;column index out of bounds&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000138" class="method-detail">
+        <a name="M000138"></a>
+
+        <div class="method-heading">
+          <a href="#M000138" class="method-signature">
+          <span class="method-name">column_vector?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if self is a column vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000138-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 162</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">column_vector?</span>; <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000135" class="method-detail">
+        <a name="M000135"></a>
+
+        <div class="method-heading">
+          <a href="#M000135" class="method-signature">
+          <span class="method-name">d</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a proxy for the matrix for which &#8217;*&#8217; is defined as the
+<a href="MatrixGeneralMixin.html#M000140">scalar</a> product. See also
+<tt><a href="MatrixGeneralMixin.html#M000134">e</a></tt>
+</p>
+<ul>
+<li>a * b =&gt; matrix multiplication (a.mmul(b))
+
+</li>
+<li>a .<a href="MatrixGeneralMixin.html#M000135">d</a>* b =&gt; <a
+href="MatrixGeneralMixin.html#M000140">scalar</a> product (a.dot(b))
+
+</li>
+</ul>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000135-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 150</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">d</span>
+      <span class="ruby-constant">MatrixDotProxy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000125" class="method-detail">
+        <a name="M000125"></a>
+
+        <div class="method-heading">
+          <a href="#M000125" class="method-signature">
+          <span class="method-name">dims</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get the <a href="MatrixGeneralMixin.html#M000126">size</a> of the matrix as
+<tt>[rows, columns]</tt>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000125-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 55</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dims</span>
+      [<span class="ruby-identifier">rows</span>, <span class="ruby-identifier">columns</span>]
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
+
+        <div class="method-heading">
+          <a href="#M000134" class="method-signature">
+          <span class="method-name">e</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a proxy of the matrix for which &#8217;*&#8217; is defined as
+elementwise.
+</p>
+<p>
+That is:
+</p>
+<ul>
+<li>a * b =&gt; matrix multiplication
+
+</li>
+<li>a.e * b =&gt; element wise multiplication
+
+</li>
+</ul>
+<p>
+For extra coolness, try writing it as &quot;a .<a
+href="MatrixGeneralMixin.html#M000134">e</a>* b&quot;, such that it looks
+more like the &quot;.<a href="MatrixGeneralMixin.html#M000134">e</a>&quot;
+belongs to the operator, not the object. (Not sure whether this is really
+worth it, though ;) )
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 141</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-constant">JBLAS</span><span class="ruby-operator">::</span><span class="ruby-constant">MatrixElementWiseProxy</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
+
+        <div class="method-heading">
+          <a href="#M000132" class="method-signature">
+          <span class="method-name">hcat</span><span class="method-args">(y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return a new matrix which consists of the <em>self</em> and <em>y</em> side
+by side. In general the <a href="MatrixGeneralMixin.html#M000132">hcat</a>
+method should be used sparingly as it creates a new matrix and copies
+everything on each use. You should always ask yourself if an array of
+vectors or matrices doesn&#8216;<a
+href="MatrixGeneralMixin.html#M000123">t</a> serve you better. That said,
+you <em>can</em> do funny things with <tt>inject</tt>. For example,
+</p>
+<pre>
+  a = mat[1,2,3]
+  [a, 2*a, 3*a].inject {|s,x| s = s.hcat(x)}
+  =&gt; 1.0  2.0  3.0
+     2.0  4.0  6.0
+     3.0  6.0  9.0
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000132-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 114</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hcat</span>(<span class="ruby-identifier">y</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dims</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">y</span>.<span class="ruby-identifier">dims</span>[<span class="ruby-value">0</span>]
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Matrices must have same number of rows&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-constant">DoubleMatrix</span>.<span class="ruby-identifier">concat_horizontally</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">y</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000130" class="method-detail">
+        <a name="M000130"></a>
+
+        <div class="method-heading">
+          <a href="#M000130" class="method-signature">
+          <span class="method-name">inv</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the inverse of self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000130-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 85</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inv</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">square?</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Inverses can only be computed from square '</span> <span class="ruby-operator">+</span>
+          <span class="ruby-value str">'matrices. Use solve instead!'</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">solve</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">eye</span>(<span class="ruby-identifier">rows</span>))
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000137" class="method-detail">
+        <a name="M000137"></a>
+
+        <div class="method-heading">
+          <a href="#M000137" class="method-signature">
+          <span class="method-name">row_vector?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if self is a row vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000137-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 159</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">row_vector?</span>; <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
+
+        <div class="method-heading">
+          <a href="#M000143" class="method-signature">
+          <span class="method-name">save_ascii</span><span class="method-args">(fn)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Save as ascii (tab-separated list, every row is a line)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 190</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_ascii</span>(<span class="ruby-identifier">fn</span>)
+      <span class="ruby-identifier">o</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">fn</span>, <span class="ruby-value str">'w'</span>)
+      <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">o</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">i</span>,<span class="ruby-identifier">j</span>)
+          <span class="ruby-identifier">o</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\t&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">j</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">columns</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">o</span>.<span class="ruby-identifier">puts</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">o</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000140" class="method-detail">
+        <a name="M000140"></a>
+
+        <div class="method-heading">
+          <a href="#M000140" class="method-signature">
+          <span class="method-name">scalar</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the first entry of self.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000140-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 168</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scalar</span>; <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000139" class="method-detail">
+        <a name="M000139"></a>
+
+        <div class="method-heading">
+          <a href="#M000139" class="method-signature">
+          <span class="method-name">scalar?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if self is a <a
+href="MatrixGeneralMixin.html#M000140">scalar</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000139-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 165</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scalar?</span>; <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000126" class="method-detail">
+        <a name="M000126"></a>
+
+        <div class="method-heading">
+          <a href="#M000126" class="method-signature">
+          <span class="method-name">size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get the total number of elements. Synonymous to length.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000126-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 60</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
+      <span class="ruby-identifier">length</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000131" class="method-detail">
+        <a name="M000131"></a>
+
+        <div class="method-heading">
+          <a href="#M000131" class="method-signature">
+          <span class="method-name">solve</span><span class="method-args">(b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Solve the linear equation self * x = b.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000131-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 94</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">solve</span>(<span class="ruby-identifier">b</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symmetric?</span>
+        <span class="ruby-constant">Solve</span>.<span class="ruby-identifier">solve_symmetric</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">b</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-constant">Solve</span>.<span class="ruby-identifier">solve</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">b</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000129" class="method-detail">
+        <a name="M000129"></a>
+
+        <div class="method-heading">
+          <a href="#M000129" class="method-signature">
+          <span class="method-name">symmetric?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if the matrix is square and symmetric.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000129-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 80</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">symmetric?</span>
+      <span class="ruby-identifier">square?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">t</span>).<span class="ruby-identifier">normmax</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1e-6</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
+
+        <div class="method-heading">
+          <a href="#M000123" class="method-signature">
+          <span class="method-name">t</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Transpose the matrix. You obtain a transposed view of the matrix. Some
+operations are not possible on such views, for example most in-place
+operations. For such, do a <tt>compact</tt> first.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 45</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">t</span>; <span class="ruby-identifier">transpose</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
+
+        <div class="method-heading">
+          <a href="#M000124" class="method-signature">
+          <span class="method-name">transpose</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Transpose the matrix. See <a href="MatrixGeneralMixin.html#M000123">t</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000124-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 49</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transpose</span>
+        <span class="ruby-constant">JAVA_METHOD</span>
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
+
+        <div class="method-heading">
+          <a href="#M000133" class="method-signature">
+          <span class="method-name">vcat</span><span class="method-args">(y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return a new matrix which consists of the <em>self</em> on top of
+<em>y</em>. In general the <a
+href="MatrixGeneralMixin.html#M000132">hcat</a> methods should be used
+sparingly. You should always ask yourself if an array of vectors or
+matrices doesn&#8216;<a href="MatrixGeneralMixin.html#M000123">t</a> serve
+you better. See also <a href="MatrixGeneralMixin.html#M000132">hcat</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 125</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vcat</span>(<span class="ruby-identifier">y</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dims</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">y</span>.<span class="ruby-identifier">dims</span>[<span class="ruby-value">1</span>]
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Matrices must have same number of columns&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-constant">DoubleMatrix</span>.<span class="ruby-identifier">concat_vertically</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">y</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000136" class="method-detail">
+        <a name="M000136"></a>
+
+        <div class="method-heading">
+          <a href="#M000136" class="method-signature">
+          <span class="method-name">vector?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns true if self is a vector
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000136-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_general.rb, line 156</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vector?</span>; <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

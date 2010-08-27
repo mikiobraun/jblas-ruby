@@ -1,0 +1,1686 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: JBLAS</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">JBLAS</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/jblas/arith_rb.html">
+                lib/jblas/arith.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/complex_rb.html">
+                lib/jblas/complex.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/errors_rb.html">
+                lib/jblas/errors.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/functions_rb.html">
+                lib/jblas/functions.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/java_rb.html">
+                lib/jblas/java.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/matrix_mixin_rb.html">
+                lib/jblas/matrix_mixin.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_access_rb.html">
+                lib/jblas/mixin_access.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_arith_rb.html">
+                lib/jblas/mixin_arith.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_class_rb.html">
+                lib/jblas/mixin_class.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_complex_matrix_rb.html">
+                lib/jblas/mixin_complex_matrix.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_convert_rb.html">
+                lib/jblas/mixin_convert.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_enum_rb.html">
+                lib/jblas/mixin_enum.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/mixin_general_rb.html">
+                lib/jblas/mixin_general.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas/proxies_rb.html">
+                lib/jblas/proxies.rb
+                </a>
+        <br />
+                <a href="../files/lib/jblas_rb.html">
+                lib/jblas.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The jblas module provides matrix classes and functions to comfortably work
+with the matrices.
+</p>
+<h1>Overview</h1>
+<p>
+<a href="JBLAS.html">JBLAS</a> defines the following six classes:
+</p>
+<ul>
+<li><a href="JBLAS/DoubleMatrix.html">DoubleMatrix</a> - double precision real
+matrix
+
+</li>
+<li><a href="JBLAS/FloatMatrix.html">FloatMatrix</a> - single precision real
+matrix
+
+</li>
+<li><a href="JBLAS/ComplexDoubleMatrix.html">ComplexDoubleMatrix</a> - double
+precision complex matrix
+
+</li>
+<li><a href="JBLAS/ComplexFloatMatrix.html">ComplexFloatMatrix</a> - single
+precision complex matrix
+
+</li>
+<li><a href="JBLAS/ComplexDouble.html">ComplexDouble</a> - double precision
+complex number
+
+</li>
+<li><a href="JBLAS/ComplexFloat.html">ComplexFloat</a> - single precision
+complex number
+
+</li>
+</ul>
+<p>
+These classes have the usual arithmetic operations defined as well as
+coercion to make them work as seamlessly as possible with the <a
+href="JBLAS.html#M000021">norm</a> built-in Ruby numerical types.
+</p>
+<p>
+Technically, jblas-ruby is organized in a number of mixins which are
+included in the <a href="Java.html">Java</a> objects to add syntactic sugar
+and make the objects play well with Ruby. Links to these mixins are
+included in each section.
+</p>
+<h1>Creation</h1>
+<p>
+<em>See also <a
+href="JBLAS/MatrixClassMixin.html">JBLAS::MatrixClassMixin</a>, <a
+href="JBLAS.html#M000007">mat</a></em>
+</p>
+<p>
+You create a matrix or vector explicitly by using the <a
+href="JBLAS/DoubleMatrix.html">DoubleMatrix</a>[], or <a
+href="JBLAS/FloatMatrix.html">FloatMatrix</a>[] constructor. For example:
+</p>
+<pre>
+  DoubleMatrix[[1,2,3],[4,5,6]]
+  =&gt; 1.0  2.0  3.0
+     4.0  5.0  6.0
+
+  DoubleMatrix[1,2,3]
+  =&gt; 1.0
+     2.0
+     3.0
+</pre>
+<p>
+Since typing <a href="JBLAS/DoubleMatrix.html">DoubleMatrix</a> all the
+time is a bit cumbersome, jblas also provides the <a
+href="JBLAS.html#M000007">mat</a> function which is a short-hand for <a
+href="http://...">DoubleMatrix</a>:
+</p>
+<pre>
+  mat[1,2,3]
+  =&gt; 1.0
+     2.0
+     3.0
+</pre>
+<p>
+Apart from these constructors, there are few more functions which generate
+matrices or vectors:
+</p>
+<ul>
+<li><a href="JBLAS.html#M000008">zeros</a>(n), and <a
+href="JBLAS.html#M000008">zeros</a>(n,m): vector or matrix of <a
+href="JBLAS.html#M000008">zeros</a>.
+
+</li>
+<li><a href="JBLAS.html#M000009">ones</a>(&#8230;) - a vector or matrix of <a
+href="JBLAS.html#M000009">ones</a>.
+
+</li>
+<li><a href="JBLAS.html#M000012">rand</a>(&#8230;) - a vector or matrix whose
+elements are drawn uniformly in [0,1]
+
+</li>
+<li><a href="JBLAS.html#M000013">randn</a>(&#8230;) - elemens are drawn from
+normal Gaussian distribution
+
+</li>
+<li><a href="JBLAS.html#M000010">diag</a>(x) - return diagonal of a matrix or
+matrix with given diagonal
+
+</li>
+<li><a href="JBLAS.html#M000011">eye</a>(n) - identity matrix
+
+</li>
+<li>x.hcat(y) - returns the horizontal concatenation of x and y
+
+</li>
+<li>x.vcat(y) - returns the vertical concatenation of x and y
+
+</li>
+</ul>
+<p>
+<a href="JBLAS.html#M000022">hcat</a> and <a
+href="JBLAS.html#M000023">vcat</a> also exist as methods which take an
+arbitrary number of arguments and returns the horizontal or vertical
+concatenation of its arguments.
+</p>
+<h1>Accessing elements</h1>
+<p>
+<em>See also <a
+href="JBLAS/MatrixAccessMixin.html">JBLAS::MatrixAccessMixin</a>.</em>
+</p>
+<p>
+To access individual elements, use the [] or []= methods, or <tt>get</tt>,
+and <tt>put</tt> respectively.
+</p>
+<p>
+Rows and columns can be accessed with get_row, put_row and get_column,
+put_column.
+</p>
+<p>
+You can also often use ranges or enumerables with [] and []=, for example
+</p>
+<pre>
+  x[0..2, [1,2,3]]
+</pre>
+<h1>Arithmetics</h1>
+<p>
+<em>See also <a
+href="JBLAS/MatrixAccessMixin.html">JBLAS::MatrixAccessMixin</a>.</em>
+</p>
+<p>
+Arithmetic is defined using the usual operators, that is
+</p>
+<ul>
+<li>(matrix-)multiplication: a * b
+
+</li>
+<li>addition: a + b
+
+</li>
+<li>subtraction: a - b
+
+</li>
+</ul>
+<p>
+Multiplication is the usual (linear algebra) multiplication.
+</p>
+<p>
+There exist also non-operator versions (which are the original <a
+href="Java.html">Java</a> functions) These also give you more control over
+the generation of temporary objects. The suffix &quot;!&quot; or
+&quot;i&quot; indicates that the computation is performed in-place on the
+left operand.
+</p>
+<ul>
+<li>(matrix-)multiplication: a.mmul(b), a.mmul!(b)
+
+</li>
+<li>elementwise multiplication: a.mul(b), a.mul!(b)
+
+</li>
+<li>addition: a.add(b), a.add!(b)
+
+</li>
+<li>subtraction: a.sub(b), a.sub!(b)
+
+</li>
+<li>elementwise division: a.div(b), a.div!(b)
+
+</li>
+</ul>
+<p>
+Some special functions exist for adding the same column vector to all
+columns of a matrix, or row vector to all rows:
+</p>
+<ul>
+<li>m.add_column_vector(x) adds a column vector
+
+</li>
+<li>m.add_row_vector(x) adds a row vector
+
+</li>
+</ul>
+<h1>Matrix and Vectors as Enumerables</h1>
+<p>
+<em>See also <a
+href="JBLAS/MatrixEnumMixin.html">JBLAS::MatrixEnumMixin</a>.</em>
+</p>
+<p>
+Both the matrices and vectors implement the Enumerable mixin. Matrices
+behave as if they are a linear array of their elements (going down rows
+first). If you want to iterate over rows or columns, use the rows_to_a or
+columns_to_a methods, as well as each_row and each_column.
+</p>
+<h1>Functions</h1>
+<p>
+<a href="JBLAS.html">JBLAS</a> defines a large number of mathematical
+functions. You can either call these as a method on a matrix, vector, or
+even number, or in the usual notation as a function.
+</p>
+<ul>
+<li>acos: arcus cosine
+
+</li>
+<li>asin: arcus sine
+
+</li>
+<li>atan: arcus tangens
+
+</li>
+<li>cos: cosine
+
+</li>
+<li>cosh: hyperbolic cosine
+
+</li>
+<li>exp: exponential
+
+</li>
+<li>log10: logarithm to base 10
+
+</li>
+<li>log: natural logarithm
+
+</li>
+<li>sin: sine
+
+</li>
+<li>sinh: hyperbolic sine
+
+</li>
+<li>sqrt: square root
+
+</li>
+<li>tan: tangens
+
+</li>
+<li>tanh: hyperbolic tangens
+
+</li>
+</ul>
+<p>
+By adding the suffix &quot;i&quot; or &quot;!&quot; to the method
+functions, you again perform the computation in-place. For example
+</p>
+<pre>
+  exp(x)
+</pre>
+<p>
+returns a copy of <tt>x</tt>, but
+</p>
+<pre>
+  exp(x)
+  exp!(x)
+</pre>
+<p>
+do not.
+</p>
+<h1>Geometry</h1>
+<p>
+Some functions to deal with geometric properties:
+</p>
+<ul>
+<li><a href="JBLAS.html#M000021">norm</a>(x, type=2) computes the <a
+href="JBLAS.html#M000021">norm</a> for type=1, 2, or :inf
+
+</li>
+<li>x.dot(y) computes the scalar product
+
+</li>
+</ul>
+<h1>Linear Equations</h1>
+<p>
+In order to <a href="JBLAS.html#M000020">solve</a> the linear equation
+<tt>a * x = b</tt>, with <tt>b</tt> either being a matrix or a vector, call
+<a href="JBLAS.html#M000020">solve</a>:
+</p>
+<pre>
+  x = a.solve(b)
+</pre>
+<p>
+or
+</p>
+<pre>
+  solve(a, b)
+</pre>
+<h1>Eigenproblems</h1>
+<p>
+Compute the eigenvalue of a square matrix <tt>a</tt> with
+</p>
+<pre>
+  e = eig(a)
+</pre>
+<p>
+Compute the eigenvectors as well with
+</p>
+<pre>
+  u, d = eigv(a)
+</pre>
+<p>
+<a href="JBLAS.html#M000019">eigv</a> returns two matrices, the matrix
+<tt>u</tt> whose columns are the eigenvectors, and the matrix <tt>d</tt>,
+whose diagonal contains the eigenvalues.
+</p>
+<h1>Singular value decomposition</h1>
+<p>
+Compute the singular value decomposition of an (arbitrarily shaped) matrix
+<tt>a</tt> with
+</p>
+<pre>
+   u, s, v = svd(a)
+</pre>
+<p>
+The columns of <tt>u</tt> and <tt>v</tt> will contain the singular vectors,
+and <tt>s</tt> is a vector containing the singular values.
+</p>
+<p>
+You can also compute a sparse SVD with <a
+href="JBLAS.html#M000038">svd</a>(a, true) (meaning that <tt>u</tt> and
+<tt>v</tt> are not square but have the minimal rectangular size necessary).
+</p>
+<p>
+Finally, <a href="JBLAS.html#M000039">svdv</a>(a) computes only the
+singular values of <tt>a</tt>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000006">check_matrix_square</a>&nbsp;&nbsp;
+      <a href="#M000036">cholesky</a>&nbsp;&nbsp;
+      <a href="#M000034">cumsum</a>&nbsp;&nbsp;
+      <a href="#M000037">det</a>&nbsp;&nbsp;
+      <a href="#M000010">diag</a>&nbsp;&nbsp;
+      <a href="#M000018">eig</a>&nbsp;&nbsp;
+      <a href="#M000019">eigv</a>&nbsp;&nbsp;
+      <a href="#M000011">eye</a>&nbsp;&nbsp;
+      <a href="#M000022">hcat</a>&nbsp;&nbsp;
+      <a href="#M000041">idx</a>&nbsp;&nbsp;
+      <a href="#M000025">linspace</a>&nbsp;&nbsp;
+      <a href="#M000026">logspace</a>&nbsp;&nbsp;
+      <a href="#M000035">lup</a>&nbsp;&nbsp;
+      <a href="#M000007">mat</a>&nbsp;&nbsp;
+      <a href="#M000032">max</a>&nbsp;&nbsp;
+      <a href="#M000029">mean</a>&nbsp;&nbsp;
+      <a href="#M000031">min</a>&nbsp;&nbsp;
+      <a href="#M000021">norm</a>&nbsp;&nbsp;
+      <a href="#M000009">ones</a>&nbsp;&nbsp;
+      <a href="#M000014">pow</a>&nbsp;&nbsp;
+      <a href="#M000016">pow!</a>&nbsp;&nbsp;
+      <a href="#M000015">powi</a>&nbsp;&nbsp;
+      <a href="#M000012">rand</a>&nbsp;&nbsp;
+      <a href="#M000013">randn</a>&nbsp;&nbsp;
+      <a href="#M000027">range</a>&nbsp;&nbsp;
+      <a href="#M000024">repmat</a>&nbsp;&nbsp;
+      <a href="#M000033">sinc</a>&nbsp;&nbsp;
+      <a href="#M000020">solve</a>&nbsp;&nbsp;
+      <a href="#M000030">sort</a>&nbsp;&nbsp;
+      <a href="#M000028">sum</a>&nbsp;&nbsp;
+      <a href="#M000038">svd</a>&nbsp;&nbsp;
+      <a href="#M000039">svdv</a>&nbsp;&nbsp;
+      <a href="#M000040">tictoc</a>&nbsp;&nbsp;
+      <a href="#M000017">trace</a>&nbsp;&nbsp;
+      <a href="#M000023">vcat</a>&nbsp;&nbsp;
+      <a href="#M000008">zeros</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Java.html">Java</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="JBLAS/ComplexMatrixMixin.html" class="link">JBLAS::ComplexMatrixMixin</a><br />
+Module <a href="JBLAS/ComplexMixin.html" class="link">JBLAS::ComplexMixin</a><br />
+Module <a href="JBLAS/Errors.html" class="link">JBLAS::Errors</a><br />
+Module <a href="JBLAS/MatrixAccessMixin.html" class="link">JBLAS::MatrixAccessMixin</a><br />
+Module <a href="JBLAS/MatrixArithMixin.html" class="link">JBLAS::MatrixArithMixin</a><br />
+Module <a href="JBLAS/MatrixClassMixin.html" class="link">JBLAS::MatrixClassMixin</a><br />
+Module <a href="JBLAS/MatrixConvertMixin.html" class="link">JBLAS::MatrixConvertMixin</a><br />
+Module <a href="JBLAS/MatrixEnumMixin.html" class="link">JBLAS::MatrixEnumMixin</a><br />
+Module <a href="JBLAS/MatrixGeneralMixin.html" class="link">JBLAS::MatrixGeneralMixin</a><br />
+Module <a href="JBLAS/MatrixMixin.html" class="link">JBLAS::MatrixMixin</a><br />
+Class <a href="JBLAS/ComplexDouble.html" class="link">JBLAS::ComplexDouble</a><br />
+Class <a href="JBLAS/ComplexDoubleMatrix.html" class="link">JBLAS::ComplexDoubleMatrix</a><br />
+Class <a href="JBLAS/ComplexFloat.html" class="link">JBLAS::ComplexFloat</a><br />
+Class <a href="JBLAS/ComplexFloatMatrix.html" class="link">JBLAS::ComplexFloatMatrix</a><br />
+Class <a href="JBLAS/DoubleMatrix.html" class="link">JBLAS::DoubleMatrix</a><br />
+Class <a href="JBLAS/FloatMatrix.html" class="link">JBLAS::FloatMatrix</a><br />
+Class <a href="JBLAS/MatrixDotProxy.html" class="link">JBLAS::MatrixDotProxy</a><br />
+Class <a href="JBLAS/MatrixElementWiseProxy.html" class="link">JBLAS::MatrixElementWiseProxy</a><br />
+Class <a href="JBLAS/ReversedArithmetic.html" class="link">JBLAS::ReversedArithmetic</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MatrixFactory</td>
+          <td>=</td>
+          <td class="context-item-value">{     :double =&gt; DoubleMatrix,     :float =&gt; FloatMatrix</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Module Functions
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FUNCTIONS</td>
+          <td>=</td>
+          <td class="context-item-value">{     'abs' =&gt; 'Compute the absolute value.',     'acos' =&gt; 'Compute the arcus cosine.',     'asin' =&gt; 'Compute the arcus sine.',     'atan' =&gt; 'Compute the arcus tangens.',     'cbrt' =&gt; 'Compute the cube root.',     'ceil' =&gt; 'Round up to the next integer',     'cos'  =&gt; 'Compute the cosine.',     'cosh' =&gt; 'Compute the hyperbolic cosine.',     'exp' =&gt; 'Compute the exponential function.',     'floor' =&gt; 'Round down to the next integer',     'log' =&gt; 'Compute the natural logarithm',     'log10' =&gt; 'Compute the base-10 logarithm',     'signum' =&gt; 'Compute the sign',     'sin' =&gt; 'Compute the sine',     'sinh' =&gt; 'Compute the hyperbolic sine',     'sqrt' =&gt; 'Compute the square root',     'tan' =&gt; 'Compute the tangens',     'tanh' =&gt; 'Compute the hyperbolic tangens'</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PI</td>
+          <td>=</td>
+          <td class="context-item-value">Math::PI</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">I</td>
+          <td>=</td>
+          <td class="context-item-value">ComplexDouble::I</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">check_matrix_square</span><span class="method-args">(m)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Check whether matrix is square. Raises <a
+href="JBLAS/Errors/MatrixNotSquare.html">Errors::MatrixNotSquare</a> if it
+isn&#8216;t.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 47</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">m</span>)
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">square?</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errors</span><span class="ruby-operator">::</span><span class="ruby-constant">MatrixNotSquare</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">cholesky</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the Cholesky decomposition of a square, positive definite matrix.
+</p>
+<p>
+Returns a matrix an upper triangular matrix u such that u * u.t is the
+original matrix.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 346</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cholesky</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-constant">Decompose</span>.<span class="ruby-identifier">cholesky</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">rescue</span> <span class="ruby-identifier">org</span>.<span class="ruby-identifier">jblas</span>.<span class="ruby-identifier">exceptions</span>.<span class="ruby-constant">LapackPositivityException</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errors</span><span class="ruby-operator">::</span><span class="ruby-constant">MatrixNotPositiveDefinite</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">cumsum</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the cumulative <a href="JBLAS.html#M000028">sum</a> of a vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 328</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cumsum</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">cumulative_sum</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">det</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the determinant of a square matrix.
+</p>
+<p>
+Internally computes the LU factorization and then takes the product of the
+diagonal elements.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 359</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">det</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">l</span>, <span class="ruby-identifier">u</span>, <span class="ruby-identifier">p</span> = <span class="ruby-identifier">lup</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">u</span>.<span class="ruby-identifier">diag</span>.<span class="ruby-identifier">prod</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">diag</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the diagonal of a matrix or return a matrix whose diagonal is
+specified by the vector
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 101</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">diag</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">vector?</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">diag</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">diag</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">eig</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Computing the eigenvalues of matrix.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 203</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eig</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">symmetric?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Eigen</span>.<span class="ruby-identifier">symmetric_eigenvalues</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Eigen</span>.<span class="ruby-identifier">eigenvalues</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="#M000019" class="method-signature">
+          <span class="method-name">eigv</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Computing the eigenvectors of matrix.
+</p>
+<pre>
+  u, v = eigv(x)
+</pre>
+<p>
+u are the eigenvalues and v is a diagonal matrix containing the eigenvalues
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000019-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 218</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eigv</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">symmetric?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Eigen</span>.<span class="ruby-identifier">symmetric_eigenvectors</span>(<span class="ruby-identifier">x</span>).<span class="ruby-identifier">to_a</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Eigen</span>.<span class="ruby-identifier">eigenvectors</span>(<span class="ruby-identifier">x</span>).<span class="ruby-identifier">to_a</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">eye</span><span class="method-args">(n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the identity matrix of given size.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 110</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eye</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">eye</span>(<span class="ruby-identifier">n</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="#M000022" class="method-signature">
+          <span class="method-name">hcat</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the horizontal concatenation of all arguments.
+</p>
+<p>
+See also <a
+href="JBLAS/MatrixGeneralMixin.html#M000132">MatrixGeneralMixin#hcat</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000022-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 247</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hcat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_matrix</span>}.<span class="ruby-identifier">inject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span>,<span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">hcat</span> <span class="ruby-identifier">x</span>}
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">idx</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Convenience function for converting arbitrary objects into indices.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 152</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">idx</span>(<span class="ruby-identifier">i</span>)
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_indices</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
+          <span class="method-name">linspace</span><span class="method-args">(a, b, n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generate an array of n linearly spaced points starting at a, ending at b.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 271</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">linspace</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>, <span class="ruby-identifier">n</span>)
+    (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">n</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span> = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">i</span>) <span class="ruby-operator">/</span> (<span class="ruby-identifier">n</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+      (<span class="ruby-value">1</span><span class="ruby-operator">-</span><span class="ruby-identifier">t</span>)<span class="ruby-operator">*</span><span class="ruby-identifier">a</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span><span class="ruby-operator">*</span><span class="ruby-identifier">b</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+          <a href="#M000026" class="method-signature">
+          <span class="method-name">logspace</span><span class="method-args">(a, b, n)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generate an array of n logarithmically spaced points starting at 10^a and
+ending at 10^b.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 280</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logspace</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>, <span class="ruby-identifier">n</span>)
+    (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">n</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span> = <span class="ruby-constant">Float</span>(<span class="ruby-identifier">i</span>) <span class="ruby-operator">/</span> (<span class="ruby-identifier">n</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+      <span class="ruby-value">10</span><span class="ruby-operator">**</span>( (<span class="ruby-value">1</span><span class="ruby-operator">-</span><span class="ruby-identifier">t</span>)<span class="ruby-operator">*</span><span class="ruby-identifier">a</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">t</span><span class="ruby-operator">*</span><span class="ruby-identifier">b</span> )
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">lup</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the LU factorization with pivoting.
+</p>
+<p>
+Returns matrices l, u, p
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 335</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lup</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">result</span> = <span class="ruby-constant">Decompose</span>.<span class="ruby-identifier">lu</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">l</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">u</span>, <span class="ruby-identifier">result</span>.<span class="ruby-identifier">p</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">mat</span><span class="method-args">(type=:double)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Construct a matrix. Use it like this:
+</p>
+<pre>
+  mat[1,2,3] -&gt; constructs a column vector
+  mat[[1,2,3],[4,5,6]] -&gt; construct a rectangular matrix
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 69</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mat</span>(<span class="ruby-identifier">type</span>=<span class="ruby-identifier">:double</span>)
+    <span class="ruby-constant">MatrixFactory</span>[<span class="ruby-identifier">type</span>]
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">max</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the largest element of a vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 318</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">max</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">max</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="#M000029" class="method-signature">
+          <span class="method-name">mean</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The <a href="JBLAS.html#M000029">mean</a> of a vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 303</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mean</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_mat</span>.<span class="ruby-identifier">mean</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">min</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the smallest element of a vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 313</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">min</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">min</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="#M000021" class="method-signature">
+          <span class="method-name">norm</span><span class="method-args">(x, type=2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the <a href="JBLAS.html#M000021">norm</a> of a vector
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000021-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 233</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">norm</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">type</span>=<span class="ruby-value">2</span>)
+    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">norm1</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">norm2</span>
+    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:inf</span>
+      <span class="ruby-identifier">x</span>.<span class="ruby-identifier">normmax</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">ones</span><span class="method-args">(n,m=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Construct a matrix of all <a href="JBLAS.html#M000009">ones</a>.
+</p>
+<pre>
+  ones(2, 3) == mat[[1, 1, 1],[1, 1, 1]]
+</pre>
+<p>
+If the second argument is omitted, a column vector is constructed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 91</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ones</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">ones</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">ones</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">pow</span><span class="method-args">(x, y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Computer power. <a href="JBLAS.html#M000014">pow</a>(x, y) = x ^ y.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 181</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pow</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+    <span class="ruby-identifier">x</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_mat</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">x</span>
+    <span class="ruby-identifier">y</span> = <span class="ruby-identifier">y</span>.<span class="ruby-identifier">to_amt</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">y</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-constant">MatrixFunctions</span>.<span class="ruby-identifier">pow</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <span class="method-name">pow!</span><span class="method-args">(x, y)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="JBLAS.html#M000015">powi</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">powi</span><span class="method-args">(x, y)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute power, in-place.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 188</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">powi</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+    <span class="ruby-constant">MatrixFunctions</span>.<span class="ruby-identifier">powi</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">rand</span><span class="method-args">(n=1,m=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Construct a matrix or vector with elements randomly drawn uniformly from
+[0, 1].
+</p>
+<p>
+If the second argument is omitted, a column vector is constructed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 118</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rand</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">1</span>,<span class="ruby-identifier">m</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">rand</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">rand</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">randn</span><span class="method-args">(n=1,m=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Construct a matrix or vector with elements randomly drawn from a Gaussian
+distribution with <a href="JBLAS.html#M000029">mean</a> 0 and variance 1.
+With one argument, construct a vector, with two a matrix.
+</p>
+<p>
+If the second argument is omitted, a column vector is constructed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 131</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">randn</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">1</span>,<span class="ruby-identifier">m</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">randn</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">randn</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="#M000027" class="method-signature">
+          <span class="method-name">range</span><span class="method-args">(a, s, b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generate a <a href="JBLAS.html#M000027">range</a> from a to b with step
+size s.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000027-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 288</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">range</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">x</span> = []
+    <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">b</span>
+      <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">a</span>
+      <span class="ruby-identifier">a</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">s</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">x</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">repmat</span><span class="method-args">(m, r, c)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Replicate a matrix a certain number of horizontal and vertical times.
+</p>
+<p>
+For example:
+</p>
+<pre>
+    repmat(mat[[1,2,3],[4,5,6]], 1, 2)
+    =&gt; [1.0, 2.0, 3.0, 1.0, 2.0, 3.0; 4.0, 5.0, 6.0, 4.0, 5.0, 6.0]
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 265</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">repmat</span>(<span class="ruby-identifier">m</span>, <span class="ruby-identifier">r</span>, <span class="ruby-identifier">c</span>)
+    <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_matrix</span>.<span class="ruby-identifier">repmat</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">c</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">sinc</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The <a href="JBLAS.html#M000033">sinc</a> function (Defined as sin(x)/x if
+x != 0 and 1 else).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 323</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sinc</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">sin</span>(<span class="ruby-identifier">x</span>) <span class="ruby-operator">/</span> <span class="ruby-identifier">x</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="#M000020" class="method-signature">
+          <span class="method-name">solve</span><span class="method-args">(a, b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Solve the linear equation a*x = b. See also MatrixMixin#solve.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000020-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 228</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">solve</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">a</span>.<span class="ruby-identifier">solve</span> <span class="ruby-identifier">b</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">sort</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sort the elements of a vector.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 308</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sort</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+          <a href="#M000028" class="method-signature">
+          <span class="method-name">sum</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The <a href="JBLAS.html#M000028">sum</a> of a vector. See also
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 298</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sum</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">sum</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">svd</span><span class="method-args">(x, sparse=false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the singular value decompositon of a rectangular matrix.
+</p>
+<p>
+Returns matrices u, s, v such that u*<a
+href="JBLAS.html#M000010">diag</a>(s)*v.t is the original matrix. Put
+differently, the columns of u are the left singular vectors, the columns of
+v are the right singular vectors, and s are the singular values.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 372</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">svd</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">sparse</span>=<span class="ruby-keyword kw">false</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sparse</span>
+      <span class="ruby-identifier">usv</span> = <span class="ruby-constant">Singular</span>.<span class="ruby-identifier">sparseSVD</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">usv</span> = <span class="ruby-constant">Singular</span>.<span class="ruby-identifier">fullSVD</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">usv</span>.<span class="ruby-identifier">to_a</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">svdv</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Compute the singular values of a rectangular matrix.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 382</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">svdv</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-constant">Singular</span>.<span class="ruby-constant">SVDValues</span>(<span class="ruby-identifier">x</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">tictoc</span><span class="method-args">() {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Times a block and returns the elapsed time in seconds.
+</p>
+<p>
+For example:
+</p>
+<pre>
+  tictoc { n = 100; x = randn(n, n); u, d = eigv(x) }
+</pre>
+<p>
+Times how long it takes to generate a random 100*100 matrix and compute its
+eigendecomposition.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 400</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tictoc</span>
+    <span class="ruby-identifier">saved_time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    <span class="ruby-keyword kw">yield</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">saved_time</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">trace</span><span class="method-args">(x)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Computing the <a href="JBLAS.html#M000017">trace</a> of a matrix.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 197</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-constant">JBLAS</span><span class="ruby-operator">::</span><span class="ruby-identifier">check_matrix_square</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-identifier">x</span>.<span class="ruby-identifier">diag</span>.<span class="ruby-identifier">sum</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="#M000023" class="method-signature">
+          <span class="method-name">vcat</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the vertical concatenation of all arguments
+</p>
+<p>
+See also <a
+href="JBLAS/MatrixGeneralMixin.html#M000133">MatrixGeneralMixin#vcat</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 254</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">vcat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_matrix</span>}.<span class="ruby-identifier">inject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span>,<span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">vcat</span> <span class="ruby-identifier">x</span>}
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">zeros</span><span class="method-args">(n,m=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Construct a matrix of all <a href="JBLAS.html#M000008">zeros</a>.
+</p>
+<pre>
+  zeros(2, 3) == mat[[0, 0, 0],[0, 0, 0]]
+</pre>
+<p>
+If the second argument is omitted, a column vector is constructed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/functions.rb, line 78</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">zeros</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">zeros</span>(<span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span>)
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">mat</span>.<span class="ruby-identifier">zeros</span>(<span class="ruby-identifier">n</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

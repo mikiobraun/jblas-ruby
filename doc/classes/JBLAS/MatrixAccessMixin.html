@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: JBLAS::MatrixAccessMixin</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">JBLAS::MatrixAccessMixin</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/jblas/mixin_access_rb.html">
+                lib/jblas/mixin_access.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Mixin for all kinds of element access.
+</p>
+<p>
+This mixin is collected into <a href="MatrixMixin.html">MatrixMixin</a>.
+</p>
+<p>
+You have the following options of accessing elements:
+</p>
+<ul>
+<li><b>Linear access</b>: accessing all elements linearly, going down rows
+first (x[i], x.get(i), x.put(i))
+
+</li>
+<li><b>Two-dimensional access</b>: Accessing element in row i, column j
+(x[i,j], x.get(i,j), x.put(i,j)
+
+</li>
+<li><b>Accessing rows and columns</b>: <a
+href="MatrixAccessMixin.html#M000146">get_row</a>(i), <a
+href="MatrixAccessMixin.html#M000148">get_column</a>(i), put_row(i),
+put_column(i), and also <a
+href="MatrixAccessMixin.html#M000147">get_rows</a>(i), <a
+href="MatrixAccessMixin.html#M000149">get_columns</a>(i).
+
+</li>
+<li><b>Accessing row and column ranges</b>: <a
+href="MatrixAccessMixin.html#M000150">get_row_range</a>, <a
+href="MatrixAccessMixin.html#M000151">get_column_range</a>, <a
+href="MatrixAccessMixin.html#M000152">get_range</a>
+
+</li>
+</ul>
+<p>
+As indices, you can use one of the following:
+</p>
+<ul>
+<li><b>Numbers</b>: x[10], x[3,4], x.getRow(3), etc.
+
+</li>
+<li><b>Indices as int[] arrays</b>: Unfortunately, these are bit hard to
+construct in JRuby ([1,2,3].to_java :int), therefore the emthod <a
+href="MatrixAccessMixin.html#M000153">to_indices</a> is added to Numeric,
+Enumerable, <a href="../Array.html">Array</a>, and the matrices. Then: `i =
+[1,2,3]; <a href="http://i.to_indices">x</a>`.
+
+</li>
+<li><b>Matrices</b>: In that case, x.find_indices is called to find the
+non-zero elements and use those as indices.
+
+</li>
+<li><b>Ranges</b>: See JBLAS::Ranges
+
+</li>
+</ul>
+<p>
+For some access functions (in particular getting rows and columns), you can
+also specify where to copy the result to get better performance through
+suppressing object creations.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000144">[]</a>&nbsp;&nbsp;
+      <a href="#M000145">[]=</a>&nbsp;&nbsp;
+      <a href="#M000148">get_column</a>&nbsp;&nbsp;
+      <a href="#M000151">get_column_range</a>&nbsp;&nbsp;
+      <a href="#M000149">get_columns</a>&nbsp;&nbsp;
+      <a href="#M000152">get_range</a>&nbsp;&nbsp;
+      <a href="#M000146">get_row</a>&nbsp;&nbsp;
+      <a href="#M000150">get_row_range</a>&nbsp;&nbsp;
+      <a href="#M000147">get_rows</a>&nbsp;&nbsp;
+      <a href="#M000153">to_indices</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
+
+        <div class="method-heading">
+          <a href="#M000144" class="method-signature">
+          <span class="method-name">[]</span><span class="method-args">(i, j=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get the entry at <em>i</em>, <em>j</em>. If <em>j</em> is omitted, linear
+addressing is used (that is, <em>i</em> just enumerates all entries going
+down rows first.)
+</p>
+<p>
+As indices you can use numbers, int[] arrays, matrices (non-zero elements
+are taken as indices then), and ranges.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 90</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">j</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">j</span>
+        <span class="ruby-identifier">get</span>(<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_indices</span>, <span class="ruby-identifier">j</span>.<span class="ruby-identifier">to_indices</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">get</span>(<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_indices</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
+
+        <div class="method-heading">
+          <a href="#M000145" class="method-signature">
+          <span class="method-name">[]=</span><span class="method-args">(i, j, v=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Set the entry at <em>i</em>, <em>j</em> to <em>v</em>. If <em>j</em> is
+omitted, linear addressing is used (that is, <em>i</em> just enumerates all
+entries going down rows first.)
+</p>
+<p>
+As indices you can use numbers, int[] arrays, matrices (non-zero elements
+are taken as indices then), and ranges.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000145-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 104</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">j</span>, <span class="ruby-identifier">v</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>
+        <span class="ruby-identifier">put</span>(<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_indices</span>, <span class="ruby-identifier">j</span>.<span class="ruby-identifier">to_indices</span>, <span class="ruby-identifier">v</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">put</span>(<span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_indices</span>, <span class="ruby-identifier">j</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000148" class="method-detail">
+        <a name="M000148"></a>
+
+        <div class="method-heading">
+          <a href="#M000148" class="method-signature">
+          <span class="method-name">get_column</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a column of a matrix. Unlike column(i) method, this method returns a
+copy of the given column.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000148-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 125</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_column</span>(<span class="ruby-identifier">i</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000151" class="method-detail">
+        <a name="M000151"></a>
+
+        <div class="method-heading">
+          <a href="#M000151" class="method-signature">
+          <span class="method-name">get_column_range</span><span class="method-args">(i, j1, j2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a copy of columns j1 .. j2 - 1 from row i.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000151-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 137</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_column_range</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">j1</span>, <span class="ruby-identifier">j2</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000149" class="method-detail">
+        <a name="M000149"></a>
+
+        <div class="method-heading">
+          <a href="#M000149" class="method-signature">
+          <span class="method-name">get_columns</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a number of rows.
+</p>
+<p>
+As indices you can use numbers, int[] arrays, matrices (non-zero elements
+are taken as indices then), and ranges.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000149-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 131</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_columns</span>(<span class="ruby-identifier">i</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000152" class="method-detail">
+        <a name="M000152"></a>
+
+        <div class="method-heading">
+          <a href="#M000152" class="method-signature">
+          <span class="method-name">get_range</span><span class="method-args">(i1, i2, j1, j2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a copy of the submatrix with rows i1 .. i2 - 1 and columns j1 .. j2 -
+1.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000152-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 141</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_range</span>(<span class="ruby-identifier">i1</span>, <span class="ruby-identifier">i2</span>, <span class="ruby-identifier">j1</span>, <span class="ruby-identifier">j2</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000146" class="method-detail">
+        <a name="M000146"></a>
+
+        <div class="method-heading">
+          <a href="#M000146" class="method-signature">
+          <span class="method-name">get_row</span><span class="method-args">(i, result=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get row of a matrix. Unlike the row(i) method, this method returns a copy
+of the given row. If result is given, the row is copied in that matrix.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000146-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 115</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_row</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">result</span>=<span class="ruby-keyword kw">nil</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
+
+        <div class="method-heading">
+          <a href="#M000150" class="method-signature">
+          <span class="method-name">get_row_range</span><span class="method-args">(i1, i2, j)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a copy of rows i1 .. i2 - 1 from column j.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 134</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_row_range</span>(<span class="ruby-identifier">i1</span>, <span class="ruby-identifier">i2</span>, <span class="ruby-identifier">j</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000147" class="method-detail">
+        <a name="M000147"></a>
+
+        <div class="method-heading">
+          <a href="#M000147" class="method-signature">
+          <span class="method-name">get_rows</span><span class="method-args">(i)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Get a number of rows.
+</p>
+<p>
+As indices you can use numbers, int[] arrays, matrices (non-zero elements
+are taken as indices then), and ranges.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000147-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 121</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_rows</span>(<span class="ruby-identifier">i</span>); <span class="ruby-constant">JAVA_METHOD</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000153" class="method-detail">
+        <a name="M000153"></a>
+
+        <div class="method-heading">
+          <a href="#M000153" class="method-signature">
+          <span class="method-name">to_indices</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return an array usable as an index.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000153-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/jblas/mixin_access.rb, line 144</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_indices</span>
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
