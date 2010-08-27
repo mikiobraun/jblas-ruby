@@ -1,7 +1,7 @@
 jblas-ruby - fast linear algebra for JRuby
 (c) 2009, 2010 by Mikio L. Braun
 
-Version 1.1.1
+Version 1.1.1, August 17, 2010
 
 (Note that version numbers are in sync with jblas, although jruby is somewhat
 less mature than jblas)
